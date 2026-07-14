@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huffmaster — 60-Day Project Plan (Example)</title>
+<style>
+  :root{
+    --bg:#0f1720; --panel:#16212c; --panel2:#1b2836; --line:#2a3a4a;
+    --txt:#e8eef4; --muted:#93a4b5; --accent:#4da3ff;
+    --grid:#22303e; --today:#f2b33d; --weekend:#131d27;
+    --task-txt:#cddbe8; --btn-hover-txt:#fff; --shadow:none; --gate:#f2b33d;
+    --sales:#4da3ff; --ops-field:#37c98b; --ops-staff:#f2b33d;
+    --travel:#c07dfa; --finance:#ff7a6b; --pm:#4fd1d9; --exec:#f472b6; --other:#8fa3b6;
+  }
+  html[data-theme="light"]{
+    --bg:#f4f6f9; --panel:#fff; --panel2:#f7f9fb; --line:#dde3ea;
+    --txt:#16212c; --muted:#5f7285; --accent:#1a73e8;
+    --grid:#e8edf2; --today:#c77700; --weekend:#eef1f5;
+    --task-txt:#33475a; --btn-hover-txt:#0b1219; --shadow:0 1px 2px rgba(16,33,50,.06); --gate:#c77700;
+    --sales:#1a73e8; --ops-field:#0f9d58; --ops-staff:#c77700; --travel:#8b3fd4;
+    --finance:#d93025; --pm:#0f8b96; --exec:#c2185b; --other:#7a8b9c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    transition:background .18s,color .18s}
+  header{padding:20px 26px 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:30}
+  h1{margin:0 0 4px;font-size:20px}
+  .sub{color:var(--muted);font-size:13px;max-width:900px}
+  .note{margin-top:8px;font-size:12px;color:var(--muted);background:var(--panel2);
+    border:1px dashed var(--line);border-radius:8px;padding:8px 10px;display:inline-block}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+  input[type=search]{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    padding:8px 12px;border-radius:8px;min-width:230px;font-size:13px;outline:none}
+  input[type=search]:focus{border-color:var(--accent)}
+  button{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    padding:8px 12px;border-radius:8px;font-size:13px;cursor:pointer}
+  button:hover{border-color:var(--accent);color:var(--btn-hover-txt)}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;font-size:12px;color:var(--muted);align-items:center}
+  .legend span{display:flex;align-items:center;gap:5px}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .tabs{display:flex;gap:4px}
+  .tab{padding:9px 16px;border:1px solid var(--line);border-bottom:none;
+    border-radius:9px 9px 0 0;background:transparent;color:var(--muted);font-size:13.5px;cursor:pointer}
+  .tab.on{background:var(--panel);color:var(--txt);font-weight:600;border-color:var(--line)}
+  main{padding:24px 26px 70px}
+  .view{display:none} .view.on{display:block}
+
+  /* ---------- GANTT ---------- */
+  .gantt{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto}
+  .grow{display:grid;grid-template-columns:300px 1fr;border-bottom:1px solid var(--grid);min-width:1100px}
+  .grow:last-child{border-bottom:none}
+  .glabel{padding:7px 12px;font-size:12.5px;display:flex;gap:8px;align-items:baseline;
+    border-right:1px solid var(--line);position:sticky;left:0;background:var(--panel);z-index:2}
+  .glabel .pid{color:var(--muted);font-size:11px;min-width:30px;font-variant-numeric:tabular-nums}
+  .glabel .who{color:var(--muted);font-size:11px;margin-left:auto;white-space:nowrap}
+  .gtrack{position:relative;height:34px;
+    background-image:repeating-linear-gradient(to right,var(--grid) 0 1px,transparent 1px calc(100%/12))}
+  .bar{position:absolute;top:7px;height:20px;border-radius:5px;display:flex;align-items:center;
+    padding:0 7px;font-size:11px;color:#08121b;font-weight:600;white-space:nowrap;overflow:hidden;cursor:pointer}
+  html[data-theme="light"] .bar{color:#fff}
+  .bar:hover{outline:2px solid var(--txt)}
+  .ghead{display:grid;grid-template-columns:300px 1fr;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--panel);z-index:5;min-width:1100px}
+  .ghead .glabel{font-weight:600;color:var(--muted);font-size:11px;letter-spacing:.6px;text-transform:uppercase}
+  .gscale{display:grid;grid-template-columns:repeat(60,1fr);font-size:9.5px;color:var(--muted)}
+  .gscale div{border-left:1px solid var(--grid);padding:6px 0 5px 2px;text-align:left}
+  .gstage{display:grid;grid-template-columns:300px 1fr;background:var(--panel2);border-bottom:1px solid var(--line);min-width:1100px}
+  .gstage .glabel{background:var(--panel2);font-weight:650;font-size:13px}
+  .gstage .gtrack{height:30px}
+  .stagebar{position:absolute;top:9px;height:12px;border-radius:6px;background:var(--line);opacity:.8}
+  .gatemark{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--gate)}
+  .gatemark span{position:absolute;top:2px;left:5px;font-size:9.5px;color:var(--gate);white-space:nowrap}
+
+  /* ---------- CALENDAR ---------- */
+  .weeks{display:flex;flex-direction:column;gap:12px}
+  .week{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .wk-hd{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+  .days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .day{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:8px;min-height:110px}
+  .day-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .day-n{font-size:12px;font-weight:650}
+  .day-d{font-size:10px;color:var(--muted)}
+  .ev{font-size:10.5px;padding:3px 5px;border-radius:4px;margin-bottom:3px;border-left:3px solid var(--other);
+    background:var(--panel);color:var(--task-txt);line-height:1.3}
+  .ev b{color:var(--txt)}
+  .gate-day{border-color:var(--gate)}
+  .gate-ev{border-left-color:var(--gate);color:var(--gate);font-weight:600}
+
+  /* ---------- CHECKLIST ---------- */
+  .stage-sec{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+  .stage-hd{padding:13px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;background:var(--panel2)}
+  .stage-hd:hover{background:var(--panel)}
+  .stage-hd h3{margin:0;font-size:15px;flex:1}
+  .stage-hd .days-badge{font-size:11px;color:var(--muted);background:var(--panel);
+    border:1px solid var(--line);padding:2px 8px;border-radius:20px}
+  .rows{display:none} .stage-sec.open .rows{display:block}
+  .crow{display:grid;grid-template-columns:26px 46px 1fr 190px 92px 66px;gap:10px;align-items:center;
+    padding:8px 16px;border-top:1px solid var(--grid);font-size:12.5px}
+  .crow:hover{background:var(--panel2)}
+  .crow input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+  .crow .pid{color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+  .crow .nm{font-weight:550}
+  .crow .lane{font-size:11px;color:var(--muted)}
+  .crow .win{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .crow .tk{font-size:11px;color:var(--muted);text-align:right}
+  .crow.done .nm{text-decoration:line-through;color:var(--muted)}
+  .gate-row{padding:9px 16px;border-top:1px dashed var(--gate);font-size:12px;color:var(--gate);font-weight:600}
+  .hidden{display:none!important}
+  .tip{position:fixed;z-index:100;background:var(--panel);border:1px solid var(--accent);border-radius:9px;
+    padding:9px 11px;font-size:12px;max-width:330px;box-shadow:0 6px 24px rgba(0,0,0,.35);display:none}
+  .tip h4{margin:0 0 5px;font-size:12.5px}
+  .tip .m{color:var(--muted);font-size:11px;margin-bottom:5px}
+  .tip ul{margin:4px 0 0;padding-left:16px;color:var(--task-txt)}
+  .tip li{font-size:11px;margin-bottom:2px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Huffmaster — 60-Day Project Plan <span style="color:var(--muted);font-weight:400;font-size:15px">(example)</span></h1>
+  <div class="sub">Every one of the 112 actions from the <em>Workflow_Actions</em> tab, scheduled across 60 working days. Stages overlap where the real work does; each gate is a milestone that closes its stage.</div>
+  <div class="note"><b>Illustrative schedule.</b> Durations are derived from each action's checklist depth (tasks + subtasks), then fitted to its stage window — they are not client-confirmed dates. Day 1 = Mon 20 Jul 2026; weekends excluded.</div>
+  <div class="controls">
+    <input type="search" id="q" placeholder="Search actions, owners, swimlanes…">
+    <button id="theme"><span id="ti">☀️</span> <span id="tl">Light mode</span></button>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-v="gantt">Gantt timeline</button>
+    <button class="tab" data-v="cal">Day-by-day calendar</button>
+    <button class="tab" data-v="chk">Phased checklist</button>
+  </div>
+</header>
+
+<main>
+  <div class="view on" id="gantt"></div>
+  <div class="view" id="cal"></div>
+  <div class="view" id="chk"></div>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+const PLAN = [{"name":"ENGAGEMENT - Presolicitation","gate":"Gate 1 - Contract / Opportunity Approved","start":1,"end":10,"acts":[{"id":"1.1","name":"Source Lead","lane":"Sales","resp":"Account Manager","acct":"Admin - Sales","tasks":2,"subs":11,"taskNames":["Download Monthly F7","Contact Source Leads"],"start":1,"end":2,"dur":2},{"id":"1.2","name":"Business Licensing","lane":"Finance / Accounting","resp":"Finance","acct":"Admin Mgt","tasks":5,"subs":0,"taskNames":["Confirm Licensed in the State","HC: Agency Staffing Licenses","Workers Comp Set up","Certificate of Insurance (COI)","Staffing License"],"start":1,"end":1,"dur":1},{"id":"1.5","name":"Pricing / Wage Review","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Account Manager","tasks":5,"subs":0,"taskNames":["Burden Rates","Confirm Standard Wage at/above State Min.","Confirm Wage Adjustments w/in Proforma Profitability","Price Position","Evaluate Role Fill Potential"],"start":1,"end":1,"dur":1},{"id":"1.7","name":"Security Licensing (Sec)","lane":"Executive / Admin","resp":"Admin Mgt","acct":"Operations Field","tasks":10,"subs":0,"taskNames":["Sec: Review License Document","Sec: List Current Staff w/License","Sec: Process to get Licensed","Sec: Get Licensed in the State","Sec: Vendor Licensing Need","Sec: Select Vendor","Sec: Will Vendor Train?","Sec: Negotiate Contract w/Vendor","Sec: Finger Printing Process (varies by state)","Sec: Finger Printing Vendor (Local, Mobile, Non-Local)"],"start":1,"end":2,"dur":2},{"id":"1.12","name":"Invoice Client","lane":"Finance / Accounting","resp":"Accounting","acct":"COS","tasks":4,"subs":0,"taskNames":["Genearte Job Number(s)","Provide Numbers to: Staffing & PM","Preparation/Commitment Fees Invoice","Send Prep/Commit Invoice to Client"],"start":2,"end":3,"dur":2},{"id":"1.9","name":"Staff Availability","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Recruiter Bandwidth","Hire New Staff","Field Ops Availability"],"start":2,"end":2,"dur":1},{"id":"1.3","name":"Conduct Sales Appointment","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":4,"subs":0,"taskNames":["Validate: Bargaining Size, Expiration, & Services","HC: Licensing Campaign","Review all business lines","Update CRM with collected data"],"start":3,"end":3,"dur":1},{"id":"1.4","name":"Needs Assessment","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":5,"subs":0,"taskNames":["Position Requirements","Job Descriptions","Healthcare Matrix","CDL Recruiting Questionnaire","OH Guard Authorization"],"start":4,"end":5,"dur":2},{"id":"1.6","name":"Security (On-Site / Virtual) Assessment","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":6,"subs":0,"taskNames":["Satellite Photos of Facility w/Property Lines","Needs Analysis Document","On-Site / Virtual Review","Licensing Requirements","Determine Access Points","Understand Local Emergency Service Relationships"],"start":6,"end":6,"dur":1},{"id":"1.8","name":"Logistics / Transportation Assessment","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":4,"subs":0,"taskNames":["Client Transportation","Vehicles Needed (van or bus)","Vehicle Accessibility","Review Local Vendors"],"start":7,"end":7,"dur":1},{"id":"1.10","name":"Proforma / Agreement","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":4,"subs":0,"taskNames":["Active Locations Final","Replacement Headcount Final","Generate Agreement, LOA & Proforma","Deliver to Client for Signature"],"start":8,"end":9,"dur":2},{"id":"1.11","name":"Executed Agreement","lane":"Sales","resp":"Account Manager","acct":"CRO","tasks":5,"subs":0,"taskNames":["LOA Signatures","Provide Signed Contract to Operations & Accounting","Update CRM (Project)","Finalize Terms & Conditions","Obtain Agreement Signatures"],"start":10,"end":10,"dur":1}],"counts":{"proc":12,"task":57,"sub":11,"total":80}},{"name":"STRATEGY - Agreement Signed","gate":"Gate 2 - Project Plan Approved","start":9,"end":18,"acts":[{"id":"2.1","name":"Sales Kick Off","lane":"Sales","resp":"Account Manager","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Review Contract & Proforma","Review Scope of Project","Identify Stakeholders"],"start":9,"end":9,"dur":1},{"id":"2.2","name":"Licensing Requirements","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":2,"subs":7,"taskNames":["Healthcare Licensing (HC)","Industrial Licensing (AWF)"],"start":9,"end":10,"dur":2},{"id":"2.5","name":"Lodging/Conference Plan","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":6,"subs":0,"taskNames":["Number of Hotel Rooms","In Processing Space","Upcoming Large Events","HC: Orientation Space #rooms","HC: Orientation Tech Need","HC: Orientation Amenities Needed"],"start":9,"end":10,"dur":2},{"id":"2.7","name":"Client Kick Off","lane":"Sales","resp":"Account Manager","acct":"Project Mgt","tasks":11,"subs":20,"taskNames":["Send Welcome Letter w/meeting Times for kick off","Set up Kick off meeting request","Set up Teams Group","Create Teams Task List","Create Teams One Note","Create Kick off Deck","Conduct Kick Off Meeting","HC: Client Kick Off Meeting","AWF: Client Kick Off Meeting","Sec: Client Kick Off Meeting","Dress Code"],"start":10,"end":13,"dur":4},{"id":"2.3","name":"Background Requirements","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":1,"subs":0,"taskNames":["Determine State Specific Needs"],"start":11,"end":11,"dur":1},{"id":"2.6","name":"Bus Rental Agreements","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Determine Vendor","Contract w/Bus Vendor"],"start":11,"end":11,"dur":1},{"id":"2.4","name":"Transportation Plan","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":6,"subs":0,"taskNames":["Determine # of travel days","Determine Vehicle Accessibility","Identify Client Management Transport","Identify Client Vendor Transport","Identify Staging Area","Identify Drop-Off / Pick-Up Areas"],"start":12,"end":13,"dur":2},{"id":"2.10","name":"Supply Inventory","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Confirm # of Uniforms on hand","Confirm # of Drug / Covid Screens on hand","Confirm Equipment on hand (laptops)"],"start":14,"end":14,"dur":1},{"id":"2.8","name":"Client Kick Off Follow Up","lane":"Sales","resp":"Account Manager","acct":"Project Mgt","tasks":12,"subs":0,"taskNames":["Update Huffmaster & Client Contact List","Update Client Checklist","Update Scope of Work","Recap Client Kick Off Meeting in email","Attach: Background Drug Screen Standards","Attach: Huffmaster & Client Contact List","Attach: Client Checklist","Attach: Updated Scope of Work","Attach: Sample Credential  File","HC: Attach: Clinical File Requirement Standards","HC: Attach: Managmenet Decisions Prior to 10-day","HC: Attach: Staffing Matrix Outstanding Questions"],"start":14,"end":16,"dur":3},{"id":"2.11","name":"IT Support","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":1,"subs":0,"taskNames":["Determine Equipment Needs"],"start":15,"end":15,"dur":1},{"id":"2.9","name":"Client Kick Off Action Items","lane":"Sales","resp":"Account Manager","acct":"Project Mgt","tasks":4,"subs":0,"taskNames":["Recurring Meeting Schedule","Negotiation Schedule","HC: Planning Sessions","Job Descriptions"],"start":17,"end":18,"dur":2}],"counts":{"proc":11,"task":51,"sub":27,"total":90}},{"name":"EXECUTION - Start Recruiting","gate":"Gate 3 - Staffing Pipeline Approved","start":17,"end":30,"acts":[{"id":"3.1","name":"Inventory Purchases","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":17,"end":17,"dur":1},{"id":"3.12","name":"Recomfirm Requested Staff Count & Title","lane":"Project Management","resp":"Project Mgt","acct":"Operations Staffing","tasks":5,"subs":0,"taskNames":["Price New or Modified Positions","Submit LOA for Extension","Update Recruiting Team w/Next Steps","Constant Contact Candidates w/Status","Prep Completed w/o Deployment"],"start":17,"end":18,"dur":2},{"id":"3.15","name":"Identify Locations","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":8,"subs":0,"taskNames":["Determine Single or Multiple Locations","Identify Local Accommodation","Review Brands","Provide Reservation details to client","Client Sign off Provided","Sign Contract w/Hotel(s)","Send Hotel Deposit(s)","HC: Convention Center Plan"],"start":17,"end":18,"dur":2},{"id":"3.2","name":"Generate Recruiting Schedule(s)","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Project Mgt","tasks":6,"subs":2,"taskNames":["Order Tab mimic Proforma","Update Interest to client specifics","Copy Interest to Backfill & Removed Tabs","Create Metrics Tab for Client Reporting","HC: File Requirements Tab","Security Recruiting Schedule"],"start":17,"end":18,"dur":2},{"id":"3.6","name":"Communications with client","lane":"Operations Field","resp":"Admin Operations","acct":"Director of Operations Staffing","tasks":9,"subs":0,"taskNames":["Daily Scrum Update","Weekly Staffing Report","Weekly Health Card, updates from team","Updates Weekly Health Card","Weekly Meeting Agenda","Standard Reports","Rooster","Badge Report","Recruiter Metrics"],"start":18,"end":19,"dur":2},{"id":"3.16","name":"Identify Local Availability","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":7,"subs":0,"taskNames":["Obtain Hall Layout","Account for Client Hotel Rooms if needed","Provide Reservation details to client","Client Sign off Provided","Sign Contract w/Conference Center","Send Conference Center Deposit","In Processing Plan"],"start":19,"end":21,"dur":3},{"id":"3.3","name":"Recruiter Notice","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Project Mgt","tasks":6,"subs":2,"taskNames":["Notify Recruiter of project and positions","Share Schedules with recruiter","Update ATS with new project","Assign positions to recruiting team","Recruit Candidates to Positions","Create Tear sheets"],"start":19,"end":21,"dur":3},{"id":"3.8","name":"Clean Data Daily (Lead)","lane":"Operations Field","resp":"Admin Operations","acct":"Director of Operations Staffing","tasks":5,"subs":0,"taskNames":["Qualify Candidate on Interest List (Recruiter)","Update Candidate Record to Internal Submission","Schedule Candidate (Lead)","Update candidate Record to Scheduled","HC: Confirmed / Scheduled Candidates"],"start":20,"end":21,"dur":2},{"id":"3.17","name":"Identify Local In-Processing Center","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Sign Contract w/In-Processing Center","Send In-Processing Center Deposit","Transpiration Plan"],"start":22,"end":22,"dur":1},{"id":"3.4","name":"Candidate Search","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Director of Operations Staffing","tasks":6,"subs":0,"taskNames":["Survey current database","Pull Report from ATS","Create Survey in Survey Monkey","Update Interest List w/Interested Candidates","Assign Surveyed Candidates to Recruiter","Respond to Survey Candidates"],"start":22,"end":23,"dur":2},{"id":"3.9","name":"Send Competency exam to candidate (Lead)","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":7,"subs":0,"taskNames":["Review Candidate records in ATS for file requirements (recruiter)","Send Candidate file requirements needed (recruiter)","Update Schedule w/completed file information (recruiter)","Send Skills Checklist if applicable (recruiter)","Complete Reference Verification (if applicable)","Update Declinations / Waivers if provided","Security Video Training - more questions"],"start":22,"end":24,"dur":3},{"id":"3.18","name":"Identify Local Pak Van Rental - Airport","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":6,"subs":0,"taskNames":["Identify Local Pak Van Rental - Outside Airport","Identify Local Van Rental - Airport","Identify Local Van Rental - Outside Airport","Identify Box Truck Rentals (if applicable)","Reserve Rentals","Sign Rental Agreements"],"start":23,"end":24,"dur":2},{"id":"3.5","name":"Post Jobs","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Director of Operations Staffing","tasks":3,"subs":2,"taskNames":["Create posting on Indeed","Creates posting on Zip Recruiter","Email In Box"],"start":24,"end":25,"dur":2},{"id":"3.10","name":"HC: Licensing Paid by Client","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":25,"end":25,"dur":1},{"id":"3.13","name":"Constant Contact Candidates","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":2,"subs":0,"taskNames":["Activate Red Light","HC: Organize Orientation/Training Needs"],"start":26,"end":26,"dur":1},{"id":"3.7","name":"Cloud Call Monitoring","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Director of Operations Staffing","tasks":9,"subs":0,"taskNames":["Call Report","Candidate Report","Incoming Calls","Emails","Web Responses","Submitted Files","Scheduled Candidates","Post Metrics to Teams","Scheduling Candidates"],"start":26,"end":27,"dur":2},{"id":"3.14","name":"Online Training Modules","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":6,"subs":0,"taskNames":["Unit Specific Training","Software Training Requirements","Respirator fit Test Requirements","12+ hr. Orientation Positions","Orientation Schedule / Workflow","Lodging Accommodation Plan"],"start":27,"end":28,"dur":2},{"id":"3.11","name":"Prequalify Candidate for licensing (recruiter)","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Admin Operations","tasks":5,"subs":13,"taskNames":["Add Prequalified Candidate to Licensing Tab","Licensing Process or Packet sent to Candidate","Submission through Huffmaster","Notify Accounting of needed payment","Candidate submits and Pays Directly"],"start":28,"end":30,"dur":3}],"counts":{"proc":18,"task":93,"sub":19,"total":131}},{"name":"Notice to Launch","gate":"Gate 4 - Deployment Readiness Approved","start":25,"end":45,"acts":[{"id":"4.1","name":"Set up Red Light / Green Light","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":3,"subs":20,"taskNames":["Turn on Red Light / Green Light","Confirm replacement Worker Availability","Update Employment Documents"],"start":25,"end":26,"dur":2},{"id":"4.11","name":"Payroll Setup HCM","lane":"Finance / Accounting","resp":"Payroll","acct":"COS","tasks":0,"subs":0,"taskNames":[],"start":25,"end":25,"dur":1},{"id":"4.18","name":"Determine Badging Distribution Process","lane":"Project Management","resp":"Project Mgt","acct":"Operations Staffing","tasks":0,"subs":0,"taskNames":[],"start":25,"end":25,"dur":1},{"id":"4.44","name":"Client Introductions","lane":"Sales","resp":"Admin Mgt","acct":"Project Mgt","tasks":5,"subs":0,"taskNames":["Client Expectations / Roles","Identify Staging Area / Drop off Locations","Identify End of Job Staff Removal","Local Emergency Services","Supply Chain / Facility Management"],"start":25,"end":25,"dur":1},{"id":"4.6","name":"Track in Recruiter doc in process","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Director of Operations Staffing","tasks":5,"subs":0,"taskNames":["Completed Background: update recruiter doc","Cleared Background: post in shared file","Failed Background: Remove Candidate and Backfill","File Background Check in Candidate Record","HC: Quality Check Credential Files"],"start":25,"end":25,"dur":1},{"id":"4.8","name":"Provide Hotel On-Site Leadership Contact","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":6,"subs":17,"taskNames":["Notify On-Site Leadership of Hotel Rules","Notify Convention Center of Project Launch","Confirm Internet Availability","Confirm Internet Availability","Provide Hotel Room List","Room & Tax Prepaid Every Saturday"],"start":25,"end":26,"dur":2},{"id":"4.7","name":"Completed Profile Ready for Review submitted by recruiter","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Director of Operations Staffing","tasks":3,"subs":0,"taskNames":["Profile Quality checked by Lead","Accurate QC: Load to Shared File","Lodging Accommodation Activate Contract"],"start":26,"end":26,"dur":1},{"id":"4.15","name":"Security Licensing (Sec)","lane":"Operations Staffing","resp":"Operations Field","acct":"Project Mgt","tasks":1,"subs":0,"taskNames":["Validate Licensing"],"start":27,"end":27,"dur":1},{"id":"4.2","name":"Send to Scheduled Replacements","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":0,"subs":0,"taskNames":[],"start":27,"end":27,"dur":1},{"id":"4.9","name":"Provide Bus Vendor Deployment Order","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":3,"subs":6,"taskNames":["Provide Pac Van Rental Deployment Order","Determine if Easy Pass is Needed","Confirm all are picked up"],"start":27,"end":27,"dur":1},{"id":"4.27","name":"Are COVID Screens Needed","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":28,"end":28,"dur":1},{"id":"4.3","name":"Received Completed Employment Document","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":0,"subs":0,"taskNames":[],"start":28,"end":28,"dur":1},{"id":"4.31","name":"Create Customized Airport Directions","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":5,"subs":0,"taskNames":["Create Customized Driving Directions","Load Customized Directions to Teams for Recruiters","Book Flights for Admin & Pre-deployment Team","Send Flight Details to Admin & Pre-deployment Team","Security & Replacement Team Transportation"],"start":28,"end":28,"dur":1},{"id":"4.28","name":"Are Drug Screens Needed","lane":"Operations Staffing","resp":"Operations Staffing","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":29,"end":29,"dur":1},{"id":"4.32","name":"Book Flights","lane":"Travel","resp":"Travel","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Update Flight Doc","Notify Recruiter of flight details","Recruiter Notify candidate of flight details"],"start":29,"end":29,"dur":1},{"id":"4.4","name":"Update Recruiter Doc w/Airport Information","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":2,"subs":0,"taskNames":["Post in Candidate Record","Run Backgrounds on Candidate"],"start":29,"end":29,"dur":1},{"id":"4.34","name":"Notify Recruiter if Missed Flight","lane":"Travel","resp":"Travel","acct":"Operations Staffing","tasks":0,"subs":0,"taskNames":[],"start":30,"end":30,"dur":1},{"id":"4.5","name":"Validate Licensing","lane":"Operations Field","resp":"Admin Operations","acct":"Operations Staffing","tasks":1,"subs":0,"taskNames":["Industrial Licensing (AWF)"],"start":30,"end":30,"dur":1},{"id":"4.10","name":"Set up SharePoint folder","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":4,"subs":0,"taskNames":["Share with client","Create daily Badging File","Create daily Rooster Report","HC: Invoice Deposit per contract"],"start":31,"end":31,"dur":1},{"id":"4.35","name":"On-Site Team Lodging","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":0,"subs":0,"taskNames":[],"start":31,"end":31,"dur":1},{"id":"4.12","name":"Assign On-Site / In-Processing Management Team","lane":"Operations Field","resp":"Director of Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":32,"end":32,"dur":1},{"id":"4.37","name":"Set up Vehicle Assignments","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":10,"subs":0,"taskNames":["Obtain Damage Review w/Contract","Review Toll Road Process","Review Flight Schedule","Schedule Airport Runs","Schedule Comfort Runs","Confirm Facility Address(es)","Supervisor/Coord Site Drive By","Run Through Transport Routes","Identify Personnel w/Time Station Scanning","On-Site In Processing / Onboarding"],"start":32,"end":32,"dur":1},{"id":"4.13","name":"Identify Office Staff Availability","lane":"Operations Field","resp":"VP of Ops","acct":"Project Mgt","tasks":7,"subs":0,"taskNames":["Verify Margins on Office Staff Field Rate","Provide Office Team Deployment Rate","HC: Identify Practitioner Team & Rate","Assign Coordinator(s)","Assign Administrative Team","Notify Accounting of Office Staff to Deploy & Rate","Notify Accounting of Non-Billable Personnel"],"start":33,"end":33,"dur":1},{"id":"4.38","name":"Set up conference room","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":16,"subs":0,"taskNames":["Perform Drug Screen (if applicable)","I9 Validation","HC: Credential Validation","HC: Drop Completed file in Shared Folder","HC: Deliver Schedule & Orientation","SEC: Deliver Schedules / Breaks / Lunches to team","IND: Deliver Schedules / Breaks / Lunches to team","Review Client Dress Code","Review PPE Guidelines","Deliver Per Diem Card (if applicable)","Mark Per Diem Doc & Baggage (if applicable)","Deliver Time & Attendance QR Code","SEC: Obtain Uniform","SEC: Obtain Equipment (sign off required)","Provide Hotel Assignment","On-Site Orientation / Training"],"start":33,"end":34,"dur":2},{"id":"4.14","name":"On-Site Field Documents","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":9,"subs":0,"taskNames":["Per Diem","Coordinator Doc","Rooster / Staffing","Rooming List","Car Rental Log","Equipment Issued","Removed Tab","Admin Team","Discuss On-Site Final Security Assessment"],"start":34,"end":35,"dur":2},{"id":"4.16","name":"Virtual Review of Property","lane":"Operations Field","resp":"Operations Field","acct":"Account Manager","tasks":3,"subs":0,"taskNames":["Logistic Discussion (Drop Off / Pick Up)","Discuss Pick Line(s) Proximity","Discuss On-Site Transportation Plan"],"start":36,"end":36,"dur":1},{"id":"4.17","name":"Determine Vans or Buses to use","lane":"Operations Field","resp":"Operations Field","acct":"Account Manager","tasks":7,"subs":0,"taskNames":["Establish Push Schedule","Establish Morning Gathering Area & Time","Determine Facility Staging Area for Day 1","Confirm Buses can make the drive (if applicable)","Discuss End of Shift Departure Location","Discuss End of Job Departure Process","Determine Badging Report Requirements"],"start":37,"end":37,"dur":1},{"id":"4.19","name":"Determine Number of Lap Tops Needed On-Site","lane":"Operations Field","resp":"Operations Field","acct":"Director of Operations Field","tasks":0,"subs":0,"taskNames":[],"start":38,"end":38,"dur":1},{"id":"4.20","name":"HC: Training Lap Tops","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":39,"end":39,"dur":1},{"id":"4.21","name":"Sec: Evidence Computers","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":40,"end":40,"dur":1},{"id":"4.22","name":"Determine Network Setup for Job","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":41,"end":41,"dur":1},{"id":"4.23","name":"Determine Security Equipment Needs","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":42,"end":42,"dur":1},{"id":"4.24","name":"How many cameras need to be deployed","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Provide 2 SD cards per Camera","Determine what Uniforms Need to be provided"],"start":43,"end":43,"dur":1},{"id":"4.25","name":"Uniform Parts based on weather","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Which Safety Equipment will be needed","What Health Equipment / PPE"],"start":44,"end":44,"dur":1},{"id":"4.26","name":"Determine how many Per Diem Cards are needed","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":45,"end":45,"dur":1},{"id":"4.29","name":"Pre Deployment run Through","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":6,"subs":11,"taskNames":["Identify On-Site Printing Needs","Confirm Hardware Needs","Provide Admin Team Hotel & Facility Addresses","Software Setup","Determine who has On-Site Clocking Access","Create Replacement Record in TT Tool"],"start":45,"end":45,"dur":1},{"id":"4.30","name":"Ship Equipment to Hotel","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Ship Supplies to Hotel","Set up Travel"],"start":45,"end":45,"dur":1},{"id":"4.33","name":"Healthcare Team Transportation","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":7,"subs":0,"taskNames":["HC: Determine Positions w/12+ hr. Orientation","HC: Book Flights w/12+ Orientation","HC: Book Flights, remaining group","HC: Update Flight Doc","HC: Notify Recruiter of flight details","HC: Recruiter Notify candidate of flight details","Confirm Flight Check-In/Travel"],"start":45,"end":45,"dur":1},{"id":"4.36","name":"Meet and Greet Hotel Management","lane":"Operations Field","resp":"Operations Field","acct":"Director of Operations Field","tasks":3,"subs":0,"taskNames":["Establish Conference Rooms","Obtain Room Keys","On-Site Transportation Team"],"start":45,"end":45,"dur":1},{"id":"4.39","name":"HC: OJT Performed by Client","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["HC: Schedule Changes Communicated to Huffmaster","HC: Update Schedule","HC: Time Station Updated"],"start":45,"end":45,"dur":1},{"id":"4.40","name":"SEC: Vendor Licensing / Processing","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":45,"end":45,"dur":1},{"id":"4.41","name":"SEC: Line / Videographer Training","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":45,"end":45,"dur":1},{"id":"4.42","name":"SEC: Transportation / Videography Logs","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":45,"end":45,"dur":1},{"id":"4.43","name":"Electronic On-Site Communications","lane":"Operations Field","resp":"Admin Operations","acct":"Project Mgt","tasks":7,"subs":0,"taskNames":["Constant Contact Emails","Create Group of On-Site Personnel","Orientation Communication","Local Shopping (Grocery)","Consecutive Day 2, 3, communication","End of Job Communication","On-Site Client Management"],"start":45,"end":45,"dur":1}],"counts":{"proc":44,"task":125,"sub":60,"total":230}},{"name":"MONITOR","gate":"Gate 5 - Active Operations Complete","start":44,"end":56,"acts":[{"id":"5.1","name":"Work Stoppage Day 1","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["HC: Transport Personnel to Facility Staging Area","HC: Unit Manager Obtains Personnel","Ind: Transport personnel to Facility"],"start":44,"end":44,"dur":1},{"id":"5.13","name":"Payroll / Per Diem","lane":"Finance / Accounting","resp":"Accounting","acct":"COS","tasks":4,"subs":0,"taskNames":["Distribute Daily Per Diem","Process Daily Payroll (if applicable)","Weekly Payroll Processed","Expense Report Processed"],"start":44,"end":44,"dur":1},{"id":"5.15","name":"Continuous Management","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":2,"subs":11,"taskNames":["Rental Renewals (30 days)","Mid Contract Terminations"],"start":44,"end":45,"dur":2},{"id":"5.16","name":"End of Notice","lane":"Project Management","resp":"Project Mgt","acct":"Account Manager","tasks":4,"subs":15,"taskNames":["Outbound Transportation Replacement Staff","Finalize Hotel Rooms","Outbound Logistics & Management Team","Inventory Return"],"start":44,"end":45,"dur":2},{"id":"5.14","name":"Office Monitoring","lane":"Finance / Accounting","resp":"Accounting","acct":"COS","tasks":5,"subs":0,"taskNames":["Finalize Reimbursement Requests","Monitor Email Boxes: Strike, Licensing, Profiles","HC: Finalize References","HC: Finalize Verifications","HC: Complete Pending Documents"],"start":45,"end":46,"dur":2},{"id":"5.2","name":"End of Shift","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Personnel Return to Drop Off Location","Transport Personnel to Hotel"],"start":45,"end":45,"dur":1},{"id":"5.3","name":"Post Day 1","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":3,"subs":0,"taskNames":["Transport Personnel to Facility","Personnel Go to Work Stations","Transport Personnel to Hotel"],"start":46,"end":46,"dur":1},{"id":"5.4","name":"Daily Management","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":0,"taskNames":["Daily Per Diem Validation","Add Daily Expenses to Reports"],"start":47,"end":47,"dur":1},{"id":"5.5","name":"Daily Time & Attendance Validation","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":3,"subs":5,"taskNames":["Rotate Out (45 days)","Released","Resignation (DNR)"],"start":48,"end":48,"dur":1},{"id":"5.6","name":"Final Check","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":49,"end":49,"dur":1},{"id":"5.7","name":"DNR: Note ATS","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":0,"subs":0,"taskNames":[],"start":50,"end":50,"dur":1},{"id":"5.8","name":"Daily Performance Reports","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":1,"subs":0,"taskNames":["Touch base with Unit/Department Managers"],"start":51,"end":51,"dur":1},{"id":"5.9","name":"Vehicle Status","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":2,"subs":5,"taskNames":["Minor Damages","Major Damages"],"start":52,"end":53,"dur":2},{"id":"5.10","name":"Lodging Accommodations","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":4,"subs":0,"taskNames":["Add / Delete Rooms as needed","Obtain Billing Folios for Travel Manager","Research Damages","Daily Coordinator Communications"],"start":54,"end":54,"dur":1},{"id":"5.11","name":"HC: Joint Commission Reporting","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":4,"subs":0,"taskNames":["Discuss w/Client How to Handle","Failed Drug Screen","Failed Background","Failed Comp Exam"],"start":55,"end":56,"dur":2},{"id":"5.12","name":"Compliance Manager Decision","lane":"Operations Field","resp":"Operations Field","acct":"Project Mgt","tasks":4,"subs":0,"taskNames":["Personnel Issue(s): character, skills, etc.","Written Incident Report","Update Incident Log","Review / File Report"],"start":56,"end":56,"dur":1}],"counts":{"proc":16,"task":43,"sub":36,"total":96}},{"name":"CLOSE-OUT","gate":"Gate 6 - Closeout Approved","start":55,"end":60,"acts":[{"id":"6.1","name":"Deactivate Badges","lane":"Project Management","resp":"Project Mgt","acct":"Travel/ Operations  - Field","tasks":0,"subs":0,"taskNames":[],"start":55,"end":55,"dur":1},{"id":"6.10","name":"Accounting","lane":"Unmapped","resp":"Controller","acct":"COS","tasks":4,"subs":2,"taskNames":["Obtain final Expenses","Prepare Client Invoices","HC: Reconcile Deposits to Invoice","Review Accounts Payable"],"start":55,"end":56,"dur":2},{"id":"6.11","name":"Vendor Invoicing","lane":"Finance / Accounting","resp":"Accounting","acct":"COS","tasks":5,"subs":0,"taskNames":["Less than $300 Expense Account","Greater than $300 Accounting","Sec: OH/NJ Licensing to Accounting","Sec: OH/NJ Licensing Payment","Confirm Payment Received"],"start":55,"end":56,"dur":2},{"id":"6.3","name":"Hotel Wrap Up","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":3,"subs":11,"taskNames":["Hotel Folios","Conference Room(s)","Hotel Commissions"],"start":55,"end":57,"dur":3},{"id":"6.5","name":"Coordinator Wrap Up","lane":"Operations Field","resp":"Operations Field","acct":"VP of Ops","tasks":3,"subs":10,"taskNames":["Paperwork Validation","Submit Field Expenses","Inventory Wrap Up"],"start":55,"end":57,"dur":3},{"id":"6.8","name":"Sales Reengagement","lane":"Sales","resp":"Admin Mgt","acct":"Admin - Sales","tasks":5,"subs":2,"taskNames":["Set up close out call with client","Confirm: Contract Ratification Date","Set up recurring touch points","Schedule touch points in CRM","CRM Project Complete"],"start":55,"end":56,"dur":2},{"id":"6.2","name":"Deactivate System Access (if applicable)","lane":"Project Management","resp":"Project Mgt","acct":"Travel/ Operations  - Field","tasks":0,"subs":0,"taskNames":[],"start":56,"end":56,"dur":1},{"id":"6.6","name":"Project Review","lane":"Project Management","resp":"Project Mgt","acct":"Account Manager","tasks":5,"subs":0,"taskNames":["Client Review","Transition back to sales","Staffing Review","Management Team Review","Compliance Review"],"start":57,"end":58,"dur":2},{"id":"6.4","name":"Rental Wrap Up","lane":"Travel","resp":"Travel","acct":"Operations Field","tasks":2,"subs":6,"taskNames":["Rental Folios","Rental Damages"],"start":58,"end":59,"dur":2},{"id":"6.7","name":"Close Accounts","lane":"Operations Field","resp":"Admin Operations","acct":"Accounting","tasks":13,"subs":0,"taskNames":["Close Out Time Station","Close Per Diem Doc","Terminate HCM (Vensure)","Close job in ATS","Field Docs","Recruiting Schedules","PM Tool Project Complete","Outbound Travel Doc","Close Ads","Remove client folder access","Turn off Red/Green Light","Terminated Employee: Remove Schedule Access","Download End of Project lists"],"start":58,"end":60,"dur":3},{"id":"6.9","name":"End of Project Metrics","lane":"Project Management","resp":"Project Mgt","acct":"President","tasks":4,"subs":0,"taskNames":["Tally bonuses","Validate with Management","Deliver to Recruiter","Provide to Accounting"],"start":59,"end":60,"dur":2}],"counts":{"proc":11,"task":44,"sub":36,"total":92}}];
+const LANES = {"Sales":"var(--sales)","Operations Field":"var(--ops-field)","Operations Staffing":"var(--ops-staff)",
+ "Travel":"var(--travel)","Finance / Accounting":"var(--finance)","Project Management":"var(--pm)",
+ "Executive / Admin":"var(--exec)","Unmapped":"var(--other)"};
+const esc = s => (s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Day 1 = Mon 20 Jul 2026, working days only
+const START = new Date(2026,6,20);
+function dateOf(day){
+  const d = new Date(START); let added = 0;
+  while (added < day-1){ d.setDate(d.getDate()+1); if(d.getDay()!==0 && d.getDay()!==6) added++; }
+  return d;
+}
+const FMT = {month:'short', day:'numeric'};
+const pct = d => ((d-1)/60*100);
+
+document.getElementById('legend').innerHTML = Object.entries(LANES)
+  .map(([k,v])=>`<span><i class="dot" style="background:${v}"></i>${esc(k)}</span>`).join('');
+
+/* ---------- GANTT ---------- */
+let g = `<div class="gantt"><div class="ghead"><div class="glabel">Action</div>
+  <div class="gscale">${Array.from({length:60},(_,i)=>`<div>${(i%5===0)?('D'+(i+1)):''}</div>`).join('')}</div></div>`;
+PLAN.forEach(st=>{
+  const w = pct(st.end+1) - pct(st.start);
+  g += `<div class="gstage"><div class="glabel">${esc(st.name)}<span class="who">D${st.start}–${st.end}</span></div>
+    <div class="gtrack"><div class="stagebar" style="left:${pct(st.start)}%;width:${w}%"></div>
+    <div class="gatemark" style="left:${pct(st.end+1)}%"><span>${esc(st.gate.split(' - ')[0])}</span></div></div></div>`;
+  st.acts.forEach(a=>{
+    const l = pct(a.start), wd = pct(a.end+1)-pct(a.start);
+    g += `<div class="grow" data-t="${esc((a.id+' '+a.name+' '+a.lane+' '+a.resp).toLowerCase())}">
+      <div class="glabel"><span class="pid">${esc(a.id)}</span><span>${esc(a.name)}</span><span class="who">${esc(a.resp)}</span></div>
+      <div class="gtrack"><div class="bar" style="left:${l}%;width:${wd}%;background:${LANES[a.lane]||'var(--other)'}"
+        data-id="${esc(a.id)}">D${a.start}–${a.end} · ${a.dur}d</div></div></div>`;
+  });
+});
+document.getElementById('gantt').innerHTML = g + `</div>`;
+
+/* ---------- CALENDAR ---------- */
+const byDay = {};
+PLAN.forEach(st=>{
+  st.acts.forEach(a=>{ (byDay[a.start] ||= []).push({...a, kind:'start'}); });
+  (byDay[st.end] ||= []).push({gate:st.gate, kind:'gate', lane:'gate', id:'', name:st.gate});
+});
+let c = `<div class="weeks">`;
+for(let w=0; w<12; w++){
+  c += `<div class="week"><div class="wk-hd">Week ${w+1}</div><div class="days">`;
+  for(let i=1;i<=5;i++){
+    const day = w*5+i, dt = dateOf(day), evs = byDay[day]||[];
+    const hasGate = evs.some(e=>e.kind==='gate');
+    c += `<div class="day ${hasGate?'gate-day':''}"><div class="day-hd">
+      <span class="day-n">Day ${day}</span><span class="day-d">${dt.toLocaleDateString('en-US',FMT)}</span></div>`;
+    evs.forEach(e=>{
+      if(e.kind==='gate') c += `<div class="ev gate-ev" data-t="${esc(e.name.toLowerCase())}">🏁 ${esc(e.name)}</div>`;
+      else c += `<div class="ev" style="border-left-color:${LANES[e.lane]||'var(--other)'}"
+        data-t="${esc((e.id+' '+e.name+' '+e.lane+' '+e.resp).toLowerCase())}">
+        <b>${esc(e.id)}</b> ${esc(e.name)}<br><span style="color:var(--muted)">${esc(e.resp)} · ${e.dur}d</span></div>`;
+    });
+    c += `</div>`;
+  }
+  c += `</div></div>`;
+}
+document.getElementById('cal').innerHTML = c + `</div>`;
+
+/* ---------- CHECKLIST ---------- */
+let k = '';
+PLAN.forEach((st,i)=>{
+  k += `<div class="stage-sec ${i===0?'open':''}"><div class="stage-hd">
+    <h3>Stage ${i+1} — ${esc(st.name)}</h3>
+    <span class="days-badge">Days ${st.start}–${st.end}</span>
+    <span class="days-badge">${st.acts.length} actions</span></div><div class="rows">`;
+  st.acts.forEach(a=>{
+    k += `<div class="crow" data-t="${esc((a.id+' '+a.name+' '+a.lane+' '+a.resp).toLowerCase())}">
+      <input type="checkbox"><span class="pid">${esc(a.id)}</span>
+      <span class="nm">${esc(a.name)}</span>
+      <span class="lane"><i class="dot" style="display:inline-block;background:${LANES[a.lane]||'var(--other)'}"></i> ${esc(a.resp)}</span>
+      <span class="win">D${a.start}–${a.end}</span>
+      <span class="tk">${a.tasks?a.tasks+' tasks':'—'}</span></div>`;
+  });
+  k += `<div class="gate-row">🏁 Day ${st.end} — ${esc(st.gate)}</div></div></div>`;
+});
+document.getElementById('chk').innerHTML = k;
+
+document.querySelectorAll('.stage-hd').forEach(h=>
+  h.onclick=()=>h.parentElement.classList.toggle('open'));
+document.querySelectorAll('.crow input').forEach(cb=>
+  cb.onchange=()=>cb.closest('.crow').classList.toggle('done',cb.checked));
+
+/* ---------- tabs, search, theme ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on'); document.getElementById(t.dataset.v).classList.add('on');
+});
+
+const q = document.getElementById('q');
+q.oninput = () => {
+  const v = q.value.trim().toLowerCase();
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    el.classList.toggle('hidden', !!v && !el.dataset.t.includes(v));
+  });
+  document.querySelectorAll('.stage-sec').forEach(s=>{ if(v) s.classList.add('open'); });
+};
+
+const tip = document.getElementById('tip');
+const ACTS = {}; PLAN.forEach(s=>s.acts.forEach(a=>ACTS[a.id]=a));
+document.querySelectorAll('.bar').forEach(b=>{
+  b.onmouseenter = e => {
+    const a = ACTS[b.dataset.id]; if(!a) return;
+    tip.innerHTML = `<h4>${esc(a.id)} ${esc(a.name)}</h4>
+      <div class="m">${esc(a.lane)} · R: ${esc(a.resp)} · A: ${esc(a.acct)}<br>Day ${a.start}–${a.end} (${a.dur} working days)</div>
+      ${a.taskNames.length?`<ul>${a.taskNames.slice(0,8).map(t=>`<li>${esc(t)}</li>`).join('')}
+        ${a.taskNames.length>8?`<li>+ ${a.taskNames.length-8} more…</li>`:''}</ul>`:'<div class="m">No tasks beneath this action.</div>'}`;
+    tip.style.display='block';
+    const r = b.getBoundingClientRect();
+    tip.style.left = Math.min(r.left, innerWidth-350)+'px';
+    tip.style.top = (r.bottom+8 > innerHeight-160 ? r.top-tip.offsetHeight-8 : r.bottom+8)+'px';
+  };
+  b.onmouseleave = () => tip.style.display='none';
+});
+
+const root=document.documentElement, ti=document.getElementById('ti'), tl=document.getElementById('tl');
+function theme(m){ root.setAttribute('data-theme',m);
+  ti.textContent = m==='dark'?'☀️':'🌙'; tl.textContent = (m==='dark'?'Light':'Dark')+' mode';
+  try{localStorage.setItem('hm-theme',m)}catch(e){} }
+let sv=null; try{sv=localStorage.getItem('hm-theme')}catch(e){}
+theme(sv || (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
+document.getElementById('theme').onclick=()=>theme(root.getAttribute('data-theme')==='dark'?'light':'dark');
+</script>
+</body>
+</html>
