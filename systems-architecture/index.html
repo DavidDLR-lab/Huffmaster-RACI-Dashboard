@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huffmaster Integrations Diagram · POC Scope · July 2026 · Cascade Clarity</title>
+<style>
+  :root{
+    --navy:#0B223A; --purple:#625FED; --sky:#5DB9DB; --mint:#5BF7CF;
+    --white:#FFFFFF; --cloud:#F0F4F8; --slate:#8FA3B1;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cloud);color:var(--navy);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:32px 40px;}
+  .header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;}
+  h1{font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.1;color:var(--navy);}
+  h1 span{background:linear-gradient(135deg,var(--purple),var(--sky));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .sub{color:rgba(11,34,58,0.65);font-size:13px;margin-top:6px;max-width:1000px;line-height:1.5;}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(11,34,58,0.55);text-align:right;line-height:1.6;}
+  svg{width:100%;height:auto;display:block;margin-top:12px;}
+  .foot{margin-top:10px;font-size:11px;color:rgba(11,34,58,0.6);line-height:1.6;border-top:1px solid rgba(11,34,58,0.15);padding-top:10px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>Huffmaster Integrations Diagram <span>· POC Scope · Updated July 2026</span></h1>
+    <div class="sub">Faithful rebuild of Huffmaster's original Visio (Integrations_Diagram, page 2), same boxes and connections, with every change Trevor called out on the Jul 10, 2026 discovery call applied in place. The highlighted work-zone marks the Proof of Concept scope John walked on the Jul 15 review call: the Gate 1 &rarr; Gate 4 spine from signed contract to workers deployed on site, coordinated by the Cascade Enterprise Agents (SWORD).</div>
+  </div>
+  <div class="meta">CASCADE CLARITY<br>client.map = huffmaster<br>rev 2026-07-15 · v4 light<br>overlay = POC scope (green)</div>
+</div>
+
+<svg viewBox="0 0 1560 1050" xmlns="http://www.w3.org/2000/svg" font-family="Inter,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="gMain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#625FED"/><stop offset="1" stop-color="#5DB9DB"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5C7186"/>
+    </marker>
+    <marker id="arrPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#625FED"/>
+    </marker>
+    <filter id="fShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0B223A" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- ================= ARROWS (under boxes) ================= -->
+  <!-- Website(s) <-> PM Tool -->
+  <path d="M750,130 L750,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Email (O365) -->
+  <path d="M850,80 L1215,80 L1215,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Zoho Ticketing -->
+  <path d="M850,65 L1440,65 L1440,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Bullhorn (candidates) -->
+  <path d="M690,130 L690,155 L940,155 L940,700 L1010,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- PM Tool <-> CRM -->
+  <path d="M810,235 L880,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- CRM <-> Email -->
+  <path d="M1070,235 L1130,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Email -> Zoho Ticketing -->
+  <path d="M1300,235 L1360,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Zoho Ticketing <-> SMS/Automation (Sense) -->
+  <path d="M1440,290 L1440,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- CRM <-> Phone System -->
+  <path d="M965,290 L965,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Phone System -> Bullhorn -->
+  <path d="M990,460 L1050,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- CRM -> Zoho Projects (NEW) -> Bullhorn -->
+  <path d="M1000,290 L1015,560" stroke="#625FED" stroke-width="2" fill="none" marker-end="url(#arrPurple)"/>
+  <path d="M1050,640 L1070,740" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrPurple)"/>
+  <!-- Email -> Bullhorn -->
+  <path d="M1230,290 L1120,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- SMS (Sense) <-> Bullhorn -->
+  <path d="M1420,470 L1150,750" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- PM Tool -> SWORD -->
+  <path d="M700,290 L730,470" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Travel Tools (Sabre) <-> SWORD -->
+  <path d="M660,430 L700,470" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Corpay <-> Travel Tools -->
+  <path d="M510,345 L560,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Corpay -> ERP -->
+  <path d="M420,300 L390,220" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- HCM -> ERP (time bridge, live) -->
+  <path d="M380,470 L370,220" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- SWORD <-> HCM -->
+  <path d="M640,540 L490,530" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- SWORD -> Bullhorn -->
+  <path d="M880,570 L1000,760" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Faxing -> SWORD -->
+  <path d="M810,660 L790,600" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Okta -> HiHello -->
+  <path d="M500,705 L560,705" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Essium -> HCM (manual retype today) -->
+  <path d="M170,760 L350,590" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrPurple)"/>
+  <!-- Essium <-> Bullhorn -->
+  <path d="M240,830 L980,800" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Bullhorn <-> Job Boards -->
+  <path d="M1170,805 L1280,805" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Bigly <-> Bullhorn (NEW) -->
+  <path d="M900,915 L1005,860" stroke="#625FED" stroke-width="2" fill="none" marker-start="url(#arrPurple)" marker-end="url(#arrPurple)"/>
+
+  <!-- ================= POC SCOPE HALOS (under boxes) ================= -->
+  <!-- Each in-scope box gets a bold green scope outline with a soft green glow. Box borders stay untouched. -->
+  <g>
+    <!-- PM Tool -->
+    <rect x="591" y="171" width="228" height="128" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="591" y="171" width="228" height="128" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- CRM -->
+    <rect x="871" y="171" width="208" height="128" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="871" y="171" width="208" height="128" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- SWORD (coordinating brain) -->
+    <rect x="629" y="459" width="262" height="152" rx="20" fill="#12B76A" opacity="0.11"/>
+    <rect x="629" y="459" width="262" height="152" rx="20" fill="none" stroke="#12B76A" stroke-width="5" opacity="1"/>
+    <!-- HCM -->
+    <rect x="291" y="461" width="208" height="138" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="291" y="461" width="208" height="138" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Corpay -->
+    <rect x="331" y="291" width="188" height="118" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="331" y="291" width="188" height="118" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Travel Tools -->
+    <rect x="551" y="321" width="188" height="118" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="551" y="321" width="188" height="118" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Bullhorn -->
+    <rect x="971" y="731" width="208" height="138" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="971" y="731" width="208" height="138" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+  </g>
+
+  <!-- ================= BOXES ================= -->
+  <!-- Website(s) -->
+  <g>
+    <rect x="650" y="55" width="200" height="75" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="750" y="88" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Website(s)</text>
+    <text x="750" y="108" font-size="11" fill="#4A5B6C" text-anchor="middle">Applications and inquiries in</text>
+  </g>
+
+  <!-- ERP NetSuite -->
+  <g>
+    <rect x="280" y="120" width="180" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="370" y="152" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">ERP</text>
+    <text x="370" y="170" font-size="12" fill="#4A5B6C" text-anchor="middle">(NetSuite)</text>
+    <text x="370" y="192" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Invoicing · UKG time bridge live</text>
+  </g>
+
+  <!-- PM Tool -->
+  <g>
+    <rect x="600" y="180" width="210" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="705" y="215" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">PM Tool</text>
+    <text x="705" y="233" font-size="12" fill="#4A5B6C" text-anchor="middle">(Forms / eSig)</text>
+    <text x="705" y="256" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Electronic contracts + proforma:</text>
+    <text x="705" y="271" font-size="10.5" fill="#4A5B6C" text-anchor="middle">headcount, locations, pricing</text>
+  </g>
+
+  <!-- CRM (now Zoho) -->
+  <g>
+    <rect x="880" y="180" width="190" height="110" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="900" y="192" width="150" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="975" y="205" font-size="9.5" font-weight="700" fill="#625FED" text-anchor="middle">now Zoho · was Dynamics</text>
+    <text x="975" y="232" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">CRM</text>
+    <text x="975" y="252" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Sales pipeline, contracts signed,</text>
+    <text x="975" y="267" font-size="10.5" fill="#4A5B6C" text-anchor="middle">deal flows on to the project tool</text>
+  </g>
+
+  <!-- Email O365 -->
+  <g>
+    <rect x="1130" y="180" width="170" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1215" y="222" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Email</text>
+    <text x="1215" y="240" font-size="12" fill="#4A5B6C" text-anchor="middle">(O365)</text>
+    <text x="1215" y="262" font-size="10.5" fill="#4A5B6C" text-anchor="middle">+ Teams, now used properly</text>
+  </g>
+
+  <!-- Zoho Ticketing -->
+  <g>
+    <rect x="1360" y="180" width="160" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1440" y="228" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Zoho</text>
+    <text x="1440" y="246" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Ticketing</text>
+  </g>
+
+  <!-- Corpay (was Concur) -->
+  <g>
+    <rect x="340" y="300" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="356" y="312" width="90" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="401" y="325" font-size="10" font-weight="700" fill="#625FED" text-anchor="middle">was Concur</text>
+    <text x="425" y="352" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Corpay</text>
+    <text x="425" y="372" font-size="10" fill="#4A5B6C" text-anchor="middle">Virtual card per job per hotel,</text>
+    <text x="425" y="387" font-size="10" fill="#4A5B6C" text-anchor="middle">auto-coded; was 20-40k lines</text>
+  </g>
+
+  <!-- Travel Tools Sabre -->
+  <g>
+    <rect x="560" y="330" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="645" y="362" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Travel Tools</text>
+    <text x="645" y="380" font-size="12" fill="#4A5B6C" text-anchor="middle">(Sabre)</text>
+    <text x="645" y="402" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Own travel agency license</text>
+  </g>
+
+  <!-- Phone System -->
+  <g>
+    <rect x="880" y="360" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="965" y="398" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Phone</text>
+    <text x="965" y="416" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">System</text>
+    <text x="965" y="438" font-size="9.5" fill="#8FA3B1" text-anchor="middle">out of POC scope</text>
+  </g>
+
+  <!-- SMS/Automation Sense -->
+  <g>
+    <rect x="1360" y="360" width="160" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1440" y="395" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">SMS /</text>
+    <text x="1440" y="413" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Automation</text>
+    <text x="1440" y="431" font-size="12" fill="#4A5B6C" text-anchor="middle">(Sense)</text>
+    <text x="1440" y="452" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Mass texts to candidates</text>
+  </g>
+
+  <!-- HCM (now UKG Pro) -->
+  <g>
+    <rect x="300" y="470" width="190" height="120" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="318" y="482" width="154" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="395" y="495" font-size="9.5" font-weight="700" fill="#625FED" text-anchor="middle">now UKG Pro · was SyncHR</text>
+    <text x="395" y="522" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">HCM</text>
+    <text x="395" y="542" font-size="10" fill="#4A5B6C" text-anchor="middle">Payroll live and smooth · T&amp;A adapting</text>
+    <text x="395" y="557" font-size="10" fill="#4A5B6C" text-anchor="middle">Onboarding + perf mid-rollout</text>
+    <text x="395" y="572" font-size="10" fill="#4A5B6C" text-anchor="middle">Barcode clock · TimeStation retiring</text>
+  </g>
+
+  <!-- SWORD -->
+  <g>
+    <rect x="640" y="470" width="240" height="130" rx="14" fill="#FFFFFF" stroke="url(#gMain)" stroke-width="3"/>
+    <text x="760" y="491" font-size="10.5" font-weight="700" fill="#625FED" text-anchor="middle">Cascade Enterprise Agents</text>
+    <text x="760" y="513" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Huffmaster OS</text>
+    <text x="760" y="531" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">(SWORD)</text>
+    <text x="760" y="549" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#625FED" text-anchor="middle">AGENTIC LAYER · TO BUILD</text>
+    <text x="760" y="567" font-size="10" fill="#4A5B6C" text-anchor="middle">Record keeper · event triggers ·</text>
+    <text x="760" y="582" font-size="10" fill="#4A5B6C" text-anchor="middle">role guidance · RACI FAQ</text>
+  </g>
+
+  <!-- Okta -->
+  <g>
+    <rect x="360" y="660" width="140" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="430" y="698" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Okta</text>
+    <text x="430" y="720" font-size="10.5" fill="#4A5B6C" text-anchor="middle">SSO live, all apps</text>
+  </g>
+
+  <!-- HiHello -->
+  <g>
+    <rect x="560" y="660" width="140" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="630" y="710" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">HiHello</text>
+  </g>
+
+  <!-- Faxing xMedius -->
+  <g>
+    <rect x="740" y="660" width="150" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="815" y="698" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Faxing</text>
+    <text x="815" y="716" font-size="12" fill="#4A5B6C" text-anchor="middle">(xMedius)</text>
+  </g>
+
+  <!-- Onboarding Tool Essium -->
+  <g>
+    <rect x="60" y="760" width="180" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="150" y="795" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Onboarding Tool</text>
+    <text x="150" y="813" font-size="12" fill="#4A5B6C" text-anchor="middle">(Essium)</text>
+    <text x="150" y="835" font-size="10.5" fill="#625FED" text-anchor="middle">Handoff to HCM is retyped</text>
+    <text x="150" y="850" font-size="10.5" fill="#625FED" text-anchor="middle">by hand today · top target</text>
+  </g>
+
+  <!-- Bullhorn -->
+  <g>
+    <rect x="980" y="740" width="190" height="120" rx="12" fill="#FFFFFF" stroke="#0B223A" stroke-width="2"/>
+    <text x="1075" y="782" font-size="16" font-weight="700" fill="#0B223A" text-anchor="middle">Bullhorn</text>
+    <text x="1075" y="802" font-size="10" fill="#4A5B6C" text-anchor="middle">ATS hub · "Hire Now" · auto job</text>
+    <text x="1075" y="817" font-size="10" fill="#4A5B6C" text-anchor="middle">creation exists, needs the</text>
+    <text x="1075" y="832" font-size="10" fill="#4A5B6C" text-anchor="middle">staffing-order trigger</text>
+    <text x="1075" y="850" font-size="10" font-family="'JetBrains Mono',monospace" fill="#625FED" text-anchor="middle">8-9 internal recruiters</text>
+  </g>
+
+  <!-- Job Boards -->
+  <g>
+    <rect x="1280" y="760" width="180" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1370" y="798" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Job Boards</text>
+    <text x="1370" y="816" font-size="12" fill="#4A5B6C" text-anchor="middle">(JobRobotix)</text>
+  </g>
+
+  <!-- Zoho Projects NEW -->
+  <g>
+    <rect x="950" y="560" width="190" height="80" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="966" y="572" width="46" height="18" rx="9" fill="#625FED"/>
+    <text x="989" y="585" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="1045" y="612" font-size="14" font-weight="700" fill="#0B223A" text-anchor="middle">Zoho Projects</text>
+    <text x="1045" y="629" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Signed deal moves here from CRM</text>
+  </g>
+
+  <!-- Bigly NEW -->
+  <g>
+    <rect x="720" y="880" width="190" height="100" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="736" y="892" width="46" height="18" rx="9" fill="#625FED"/>
+    <text x="759" y="905" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="815" y="930" font-size="14" font-weight="700" fill="#0B223A" text-anchor="middle">Bigly</text>
+    <text x="815" y="948" font-size="10" fill="#4A5B6C" text-anchor="middle">AI calling for mass recruiting;</text>
+    <text x="815" y="963" font-size="10" fill="#4A5B6C" text-anchor="middle">SMS and email next</text>
+  </g>
+
+  <!-- ================= STEP BADGES (on scope boxes) ================= -->
+  <!-- 1: Contract (PM Tool) -->
+  <g>
+    <circle cx="600" cy="180" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="600" y="187" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+  </g>
+  <!-- 2: CRM (Zoho) -->
+  <g>
+    <circle cx="880" cy="180" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="880" y="187" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+  </g>
+  <!-- 3: Recruiting (Bullhorn) -->
+  <g>
+    <circle cx="980" cy="740" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="980" y="747" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+  </g>
+  <!-- 4: HCM setup (UKG) -->
+  <g>
+    <circle cx="300" cy="470" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="300" y="477" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+  </g>
+  <!-- 5A: Corpay -->
+  <g>
+    <circle cx="340" cy="300" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="340" y="306" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">5A</text>
+  </g>
+  <!-- 5B: Travel Tools (Sabre) -->
+  <g>
+    <circle cx="560" cy="330" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="560" y="336" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">5B</text>
+  </g>
+  <!-- SWORD coordinating-hub marker (star) -->
+  <g>
+    <circle cx="640" cy="470" r="22" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="640" y="478" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">&#9733;</text>
+  </g>
+
+  <!-- ================= POC SCOPE CALLOUT (top-left empty space) ================= -->
+  <g filter="url(#fShadow)">
+    <rect x="60" y="60" width="215" height="262" rx="14" fill="#FFFFFF" stroke="url(#gMain)" stroke-width="2"/>
+    <text x="76" y="90" font-size="13" font-weight="700" fill="url(#gMain)">PROOF OF CONCEPT</text>
+    <text x="76" y="108" font-size="13" font-weight="700" fill="url(#gMain)">SCOPE</text>
+    <line x1="76" y1="118" x2="259" y2="118" stroke="url(#gMain)" stroke-width="2"/>
+    <text x="76" y="137" font-size="11" font-weight="700" fill="#0B223A">Gate 1 &#8594; Gate 4 spine</text>
+    <text x="76" y="153" font-size="9.5" fill="#4A5B6C">Signed contract &#8594; deployed on site</text>
+    <text x="76" y="176" font-size="9.5" font-weight="700" fill="#0B223A">Cascade Enterprise Agents (SWORD)</text>
+    <text x="76" y="189" font-size="9.5" font-weight="700" fill="#0B223A">coordinate these hand-offs:</text>
+    <text x="76" y="210" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">1</tspan>  Contract (PM Tool)</text>
+    <text x="76" y="228" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">2</tspan>  CRM (Zoho)</text>
+    <text x="76" y="246" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">3</tspan>  Recruiting (Bullhorn)</text>
+    <text x="76" y="264" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">4</tspan>  HCM setup (UKG)</text>
+    <text x="76" y="282" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">5A</tspan> Corpay &#183; <tspan fill="#625FED" font-weight="700">5B</tspan> Travel</text>
+    <text x="76" y="304" font-size="9" font-style="italic" fill="#8FA3B1">Phone system: out of scope</text>
+  </g>
+
+  <!-- ================= LEGEND ================= -->
+  <g>
+    <rect x="60" y="990" width="1440" height="50" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1"/>
+    <line x1="80" y1="1015" x2="116" y2="1015" stroke="#5C7186" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="124" y="1019" font-size="12" fill="#4A5B6C">Original Visio link</text>
+    <line x1="300" y1="1015" x2="336" y2="1015" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrPurple)"/>
+    <text x="344" y="1019" font-size="12" fill="#4A5B6C">Manual today &#8594; Sword target</text>
+    <rect x="650" y="1005" width="64" height="20" rx="10" fill="rgba(98,95,237,0.08)" stroke="#625FED"/>
+    <text x="682" y="1019" font-size="11" font-weight="700" fill="#625FED" text-anchor="middle">now X</text>
+    <text x="722" y="1019" font-size="12" fill="#4A5B6C">Replaced since Visio</text>
+    <rect x="940" y="1005" width="52" height="20" rx="10" fill="#625FED"/>
+    <text x="966" y="1019" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="1000" y="1019" font-size="12" fill="#4A5B6C">Added since Visio</text>
+    <rect x="1200" y="1004" width="32" height="22" rx="8" fill="#12B76A" opacity="0.10"/>
+    <rect x="1200" y="1004" width="32" height="22" rx="8" fill="none" stroke="#12B76A" stroke-width="4"/>
+    <text x="1242" y="1019" font-size="12" fill="#4A5B6C">POC scope · Cascade agents (Gate 1&#8594;4)</text>
+  </g>
+</svg>
+
+<div class="foot">
+  Source: screenshot of Huffmaster's original Visio (Integrations_Diagram, page 2) shared by Trevor on the Jul 10, 2026 discovery call, plus his spoken updates: CRM moved from Dynamics to Zoho (with Zoho Projects handoff), Concur replaced by Corpay, HCM is UKG Pro since April 2026 (was SyncHR), TimeStation retiring by end of year, Bigly added alongside Bullhorn, Teams now in active use, Okta SSO live across all apps. <b>POC scope overlay</b> (Jul 15, 2026 proposal-review call): John color-coded the Gate 1 &rarr; Gate 4 spine as sequential hand-offs the Cascade Enterprise Agents (SWORD) coordinate: 1 Contract (PM Tool), 2 CRM (Zoho), 3 Recruiting (Bullhorn), 4 HCM setup (UKG), 5A Corpay and 5B Travel (Sabre) for deployment. Phone system excluded per his note. Box positions and connections mirror the original. Verify against the updated package Anna is sending. Prepared by Cascade Clarity.
+</div>
+</body>
+</html>
