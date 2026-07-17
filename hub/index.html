@@ -18,7 +18,9 @@
     --done:#37c98b; --prog:#5aa2ff; --block:#ff8a6b; --pend:#f2b33d;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html,body{margin:0;padding:0}
+  header.hero{scroll-margin-top:74px}
   body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
   a{color:var(--accent-ink);text-decoration:none}
   a:hover{text-decoration:underline}
@@ -859,9 +861,6 @@
     links.forEach(function(a,i){a.classList.toggle('active',i===cur);});
   }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
-  links.forEach(function(a){a.addEventListener('click',function(e){
-    var t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();window.scrollTo({top:t.offsetTop-64,behavior:'smooth'});}
-  });});
 })();
 </script>
 </body>
