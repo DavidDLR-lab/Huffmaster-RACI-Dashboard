@@ -1,293 +1,868 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Project Sword — Huffmaster Project Hub · Cascade Clarity</title>
 <style>
   :root{
-    --bg:#0d1520; --bg2:#0f1720; --panel:#16212c; --panel2:#1b2833;
-    --txt:#e8eef4; --muted:#93a4b5; --line:#2a3a4a; --sub-line:#33475a;
-    --accent:#4da3ff; --accent-2:#37c98b; --mint:#12B76A;
-    --navy:#0D2A48; --gold:#f2b33d; --pink:#f472b6; --pill:#22303d;
-    --done:#37c98b; --prog:#4da3ff; --block:#ff7a6b; --pend:#f2b33d;
+    --bg:#eef2f7; --panel:#ffffff; --panel2:#f7f9fc; --ink:#16212c; --muted:#5f7285;
+    --line:#dbe2ec; --soft:#e7edf4; --accent:#1a56c4; --accent-ink:#1a56c4; --mint:#0f9d58;
+    --navy:#0D2A48; --chip:#eef2f7; --nav:rgba(255,255,255,.85); --thumb:#eef3f8; --shadow:0 1px 3px rgba(16,40,70,.08),0 8px 24px rgba(16,40,70,.06);
+    --done:#12875a; --prog:#1a56c4; --block:#c2410c; --pend:#b45309;
+  }
+  html[data-theme="dark"]{
+    --bg:#0c141d; --panel:#16212c; --panel2:#1a2632; --ink:#e8eef4; --muted:#93a4b5;
+    --line:#28394a; --soft:#1d2b38; --accent:#5aa2ff; --accent-ink:#8cc0ff; --mint:#37c98b;
+    --navy:#0D2A48; --chip:#22303d; --nav:rgba(13,21,30,.82); --thumb:#0e1a25; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    --done:#37c98b; --prog:#5aa2ff; --block:#ff8a6b; --pend:#f2b33d;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{
-    background:radial-gradient(1200px 600px at 80% -10%, #1a2836 0%, var(--bg) 55%) fixed, var(--bg);
-    color:var(--txt);
-    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.5; -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--accent);text-decoration:none}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s}
+  a{color:var(--accent-ink);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 72px}
-  header.hero{padding:46px 0 26px;border-bottom:1px solid var(--line);margin-bottom:8px}
-  .brandrow{display:flex;align-items:center;gap:16px}
-  .mark{flex:0 0 auto}
-  .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
-  h1{font-size:34px;line-height:1.12;margin:6px 0 4px;font-weight:800;letter-spacing:-.01em}
-  h1 .sword{color:var(--accent-2)}
-  .sub{color:var(--muted);font-size:16px;max-width:760px;margin:8px 0 0}
-  .metabar{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-  .pill{background:var(--pill);border:1px solid var(--line);color:#cfe0ef;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600}
-  .pill b{color:var(--accent-2)}
-  section{margin-top:40px}
-  h2{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 6px;display:flex;align-items:center;gap:10px}
-  h2 .num{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mint);font-weight:800;opacity:.9}
-  .lead{color:var(--muted);font-size:15px;margin:0 0 18px;max-width:820px}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  @media(max-width:720px){.grid{grid-template-columns:1fr}}
-  .card{background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);border:1px solid var(--line);border-radius:14px;padding:16px 17px;display:flex;flex-direction:column;gap:6px}
-  .card .t{font-weight:700;font-size:15.5px}
-  .card .d{color:var(--muted);font-size:13.5px}
-  .card .lk{margin-top:4px;font-size:13px;font-weight:600}
-  .tag{display:inline-block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:6px;border:1px solid var(--sub-line);color:var(--muted);width:max-content}
-  .tag.live{color:#0b1219;background:var(--accent-2);border-color:var(--accent-2)}
-  .tag.drive{color:#0b1219;background:var(--gold);border-color:var(--gold)}
-  .tag.local{color:var(--muted)}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{background:var(--navy);color:#dce8f5;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0}
-  tbody tr:nth-child(even){background:#121d27}
-  tbody tr:hover{background:#1a2a38}
-  td.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;white-space:nowrap;color:#cdd9e6;font-size:12.5px}
-  .flag{color:var(--pink);font-weight:700}
-  .tablewrap{max-height:none;overflow:auto;border-radius:12px}
-  /* Kanban */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+  /* ---- app top bar ---- */
+  .appbar{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+  .appbar .row{max-width:1180px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:18px}
+  .brand{display:flex;align-items:center;gap:11px;flex:0 0 auto}
+  .brand .nm{font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+  .brand .nm b{color:var(--mint)}
+  nav.tabs{display:flex;gap:2px;flex:1 1 auto;overflow:auto;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs a{color:var(--muted);font-size:13px;font-weight:600;padding:7px 11px;border-radius:8px;white-space:nowrap}
+  nav.tabs a:hover{color:var(--ink);background:var(--soft);text-decoration:none}
+  nav.tabs a.active{color:var(--accent-ink);background:var(--soft)}
+  .tools{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+  .search{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:6px 10px;min-width:150px}
+  .search input{border:0;outline:0;background:transparent;color:var(--ink);font-size:13px;width:100%;font-family:inherit}
+  .search svg{flex:0 0 auto;opacity:.6}
+  .iconbtn{width:34px;height:34px;border:1px solid var(--line);background:var(--panel);border-radius:9px;display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+  .iconbtn:hover{background:var(--soft)}
+
+  /* ---- hero ---- */
+  header.hero{padding:34px 0 20px}
+  .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  h1{font-size:32px;line-height:1.12;margin:6px 0 6px;font-weight:800;letter-spacing:-.015em}
+  h1 .sw{color:var(--mint)}
+  .sub{color:var(--muted);font-size:15.5px;max-width:780px;margin:6px 0 0}
+  .metabar{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+  .pill{background:var(--chip);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600}
+  .pill b{color:var(--mint)}
+
+  section.blk{padding:26px 0 6px;scroll-margin-top:70px}
+  h2{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .num{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;color:var(--mint);font-weight:800}
+  .lead{color:var(--muted);font-size:14.5px;margin:0 0 16px;max-width:840px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .12s,box-shadow .12s,border-color .12s;color:var(--ink)}
+  a.card:hover{text-decoration:none;transform:translateY(-3px);border-color:var(--accent);box-shadow:0 10px 30px rgba(26,86,196,.16)}
+  .thumb{position:relative;aspect-ratio:16/9;background:var(--thumb);border-bottom:1px solid var(--line);overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .thumb svg.cov{width:100%;height:100%;display:block}
+  .cbody{padding:13px 15px 15px;display:flex;flex-direction:column;gap:5px;flex:1}
+  .tag{position:absolute;top:9px;left:9px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;padding:3px 8px;border-radius:6px;background:rgba(15,157,88,.95);color:#fff}
+  .tag.drive{background:rgba(180,83,9,.95)} .tag.local{background:rgba(95,114,133,.95)} .tag.doc{background:rgba(26,86,196,.95)}
+  .card .t{font-weight:700;font-size:15px;line-height:1.25}
+  .card .d{color:var(--muted);font-size:13px;flex:1}
+  .card .lk{margin-top:3px;font-size:12.5px;font-weight:700;color:var(--accent-ink)}
+
+  /* systems section */
+  .svgframe{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);overflow:auto}
+  .svgframe svg{width:100%;height:auto;display:block;min-width:680px}
+  .syswrap{display:grid;grid-template-columns:1fr;gap:14px}
+  .syscap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .syscap .legend{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:12.5px}
+  .swatch{display:inline-flex;align-items:center;gap:6px}
+  .swatch i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  /* meetings */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 16px}
+  @media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow)}
+  .stat .n{font-size:24px;font-weight:800;color:var(--ink);font-family:"JetBrains Mono",Menlo,monospace}
+  .stat .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-top:2px}
+  .stat.hl .n{color:var(--mint)}
+  .tablewrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel)}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:var(--navy);color:#dce8f5;font-size:11px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:56px}
+  tbody tr:nth-child(even){background:var(--panel2)}
+  tbody tr:hover{background:var(--soft)}
+  td.mono{font-family:"JetBrains Mono",Menlo,monospace;white-space:nowrap;font-size:12px;color:var(--muted)}
+  tfoot td{background:var(--soft);font-weight:700;font-size:12.5px}
+  .flag{color:#c2410c;font-weight:800}
+  html[data-theme="dark"] .flag{color:#ff8a6b}
+  .fnote{color:var(--muted);font-size:12px;margin-top:10px}
+
+  /* kanban */
   .kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
   @media(max-width:860px){.kanban{grid-template-columns:1fr 1fr}}
   @media(max-width:520px){.kanban{grid-template-columns:1fr}}
-  .col{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px}
-  .colhead{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin:2px 4px 10px}
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px;box-shadow:var(--shadow)}
+  .colhead{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin:2px 4px 10px}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px}
-  .col.done .dot{background:var(--done)} .col.prog .dot{background:var(--prog)}
-  .col.block .dot{background:var(--block)} .col.pend .dot{background:var(--pend)}
-  .colhead .cnt{color:var(--muted);font-weight:700}
-  details.kc{background:var(--panel2);border:1px solid var(--sub-line);border-left-width:3px;border-radius:9px;margin-bottom:9px;overflow:hidden}
-  .col.done details.kc{border-left-color:var(--done)} .col.prog details.kc{border-left-color:var(--prog)}
-  .col.block details.kc{border-left-color:var(--block)} .col.pend details.kc{border-left-color:var(--pend)}
-  details.kc>summary{list-style:none;cursor:pointer;padding:10px 11px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+  .col.done .dot{background:var(--done)} .col.prog .dot{background:var(--prog)} .col.block .dot{background:var(--block)} .col.pend .dot{background:var(--pend)}
+  .colhead .cnt{color:var(--muted)}
+  details.kc{background:var(--panel2);border:1px solid var(--line);border-left-width:3px;border-radius:9px;margin-bottom:9px;overflow:hidden}
+  .col.done details.kc{border-left-color:var(--done)} .col.prog details.kc{border-left-color:var(--prog)} .col.block details.kc{border-left-color:var(--block)} .col.pend details.kc{border-left-color:var(--pend)}
+  details.kc>summary{list-style:none;cursor:pointer;padding:9px 11px;font-size:12.5px;font-weight:700;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
   details.kc>summary::-webkit-details-marker{display:none}
-  details.kc>summary .own{font-size:10.5px;color:var(--muted);font-weight:600;white-space:nowrap}
-  details.kc[open]>summary{border-bottom:1px solid var(--sub-line)}
-  .kc .body{padding:9px 12px 11px;font-size:12.5px;color:var(--muted)}
-  .kc .body ul{margin:6px 0 0;padding-left:16px}
-  .kc .body li{margin:3px 0}
-  .kc .chev{color:var(--muted);font-size:11px;transition:transform .15s}
-  details.kc[open] .chev{transform:rotate(90deg)}
-  .note{background:#12202b;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:13px 15px;color:var(--muted);font-size:13.5px}
-  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 0;color:var(--muted);font-size:12.5px}
-  .legend span{display:flex;align-items:center}
-  footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  details.kc>summary .own{font-size:10px;color:var(--muted);font-weight:600;white-space:nowrap}
+  .kc .body{padding:2px 12px 11px;font-size:12px;color:var(--muted)}
+  .kc .body ul{margin:5px 0 0;padding-left:15px} .kc .body li{margin:3px 0}
+  .chev{color:var(--muted);font-size:10px;transition:transform .15s} details.kc[open] .chev{transform:rotate(90deg)}
+
+  .note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--mint);border-radius:10px;padding:13px 15px;color:var(--muted);font-size:13.5px;box-shadow:var(--shadow)}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:720px){.two{grid-template-columns:1fr}}
+  footer{margin:44px 0 60px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .hidden{display:none!important}
+  .nores{color:var(--muted);font-size:14px;padding:20px 4px}
 </style>
 </head>
 <body>
+
+<!-- ===== APP BAR ===== -->
+<div class="appbar">
+  <div class="row">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="48" y2="48"><stop offset="0" stop-color="#1a56c4"/><stop offset="1" stop-color="#0f9d58"/></linearGradient></defs>
+        <rect x="6" y="20" width="34" height="8.5" rx="2.4" transform="skewX(-18)" fill="url(#lg)" opacity=".5"/>
+        <rect x="9" y="13" width="34" height="8.5" rx="2.4" transform="skewX(-18)" fill="url(#lg)" opacity=".78"/>
+        <rect x="12" y="6" width="34" height="8.5" rx="2.4" transform="skewX(-18)" fill="url(#lg)"/>
+      </svg>
+      <span class="nm">Project <b>Sword</b> · Huffmaster</span>
+    </div>
+    <nav class="tabs" id="tabs">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#analyses">Analyses</a>
+      <a href="#systems">Systems</a>
+      <a href="#documents">Documents</a>
+      <a href="#artifacts">Artifacts</a>
+      <a href="#meetings">Meetings</a>
+      <a href="#status">Status</a>
+    </nav>
+    <div class="tools">
+      <label class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Search resources…" autocomplete="off"></label>
+      <button class="iconbtn" id="theme" title="Toggle light / dark" aria-label="Toggle theme">
+        <svg id="ic-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 
-  <header class="hero">
-    <div class="brandrow">
-      <svg class="mark" width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="48" y2="48">
-          <stop offset="0" stop-color="#4da3ff"/><stop offset="1" stop-color="#37c98b"/></linearGradient></defs>
-        <rect x="6" y="20" width="36" height="9" rx="2.5" transform="skewX(-18)" fill="url(#g)" opacity=".55"/>
-        <rect x="9" y="13" width="36" height="9" rx="2.5" transform="skewX(-18)" fill="url(#g)" opacity=".8"/>
-        <rect x="12" y="6" width="36" height="9" rx="2.5" transform="skewX(-18)" fill="url(#g)"/>
-      </svg>
-      <div>
-        <div class="kicker">Cascade Clarity · Lean Payroll Labs</div>
-        <h1>Project <span class="sword">Sword</span> — Huffmaster Project Hub</h1>
-      </div>
-    </div>
-    <p class="sub">One place for every artifact in the Huffmaster engagement: the live analysis dashboards, the systems architecture, the proposal materials, and the full meeting record. Sword is the agentic orchestration and persistence layer that sits over Huffmaster's disconnected systems as a single source of record, a workflow engine, and a knowledge base.</p>
+  <!-- ===== OVERVIEW ===== -->
+  <header class="hero" id="overview">
+    <div class="kicker">Cascade Clarity · Lean Payroll Labs</div>
+    <h1>Project <span class="sw">Sword</span> — Huffmaster Project Hub</h1>
+    <p class="sub">One place for every artifact in the Huffmaster engagement: the live analysis dashboards, the systems architecture, the proposal materials, and the full meeting record. Sword is the agentic orchestration and persistence layer over Huffmaster's disconnected systems — a single source of record, a workflow engine, and a knowledge base.</p>
     <div class="metabar">
-      <span class="pill">Engagement window <b>Jan – Jul 2026</b></span>
-      <span class="pill">Meetings logged <b>23</b></span>
+      <span class="pill">Engagement <b>Jan – Jul 2026</b></span>
+      <span class="pill">Meetings <b>23</b></span>
+      <span class="pill">Transcript captured <b>20h 44m</b></span>
       <span class="pill">POC <b>4-month · contract → CRM first</b></span>
       <span class="pill">Target start <b>Aug 1, 2026</b></span>
-      <span class="pill">Updated <b>Jul 16, 2026</b></span>
     </div>
   </header>
 
-  <!-- ANALYSES -->
-  <section>
+  <!-- ===== ANALYSES ===== -->
+  <section class="blk" id="analyses">
     <h2><span class="num">01</span> Live analyses &amp; dashboards</h2>
     <p class="lead">Interactive, self-contained pages published on GitHub Pages. Public, no login required.</p>
-    <div class="grid">
-      <div class="card"><span class="tag live">Live</span>
-        <div class="t">RACI Workflow Dashboard v1.0</div>
-        <div class="d">The full deployment lifecycle: 6 stages, 6 gates, 112 actions, 413 tasks, 189 subtasks. Search, drill-down, light/dark.</div>
-        <a class="lk" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/">Open dashboard →</a></div>
-      <div class="card"><span class="tag live">Live</span>
-        <div class="t">Systems Architecture Diagram</div>
-        <div class="d">Post-migration system map (Zoho, Bullhorn, UKG, Corpay, NetSuite, Okta) with the POC scope highlighted in green.</div>
-        <a class="lk" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/systems-architecture/">Open diagram →</a></div>
-      <div class="card"><span class="tag live">Live</span>
-        <div class="t">Workflow Dependency Analysis</div>
-        <div class="d">Tasks categorized parallel / independent / dependent, with the sequencing and structural work ahead.</div>
-        <a class="lk" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/dependencies/">Open analysis →</a></div>
-      <div class="card"><span class="tag live">Live</span>
-        <div class="t">Automation &amp; AI Opportunity Analysis</div>
-        <div class="d">Where the manual handoffs and leakage live, and the highest-value automation candidates.</div>
-        <a class="lk" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/huffmaster_automation_analysis/">Open analysis →</a></div>
-      <div class="card"><span class="tag live">Live</span>
-        <div class="t">Example 60-Day Project Plan</div>
-        <div class="d">Illustrative POC plan across Gantt, calendar, and checklist views.</div>
-        <a class="lk" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/plan.html">Open plan →</a></div>
-      <div class="card"><span class="tag local">Local</span>
-        <div class="t">Lean Payroll Lab — Demo App</div>
-        <div class="d">Reconciliation demo (login, runs, discrepancy, run-detail previews). Kept local; parked as a fast-follow after the POC.</div>
-        <div class="lk" style="color:var(--muted)">Huffmaster/demo-app/ (local only)</div></div>
+    <div class="grid" data-filter>
+
+      <a class="card" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/" data-kw="raci workflow dashboard stages gates actions tasks lifecycle">
+        <div class="thumb"><span class="tag">Live</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#f2f5f9"/><rect x="0" y="0" width="320" height="26" fill="#fff"/><rect x="14" y="10" width="90" height="7" rx="3.5" fill="#0D2A48"/>
+            <g>
+              <rect x="14" y="38" width="58" height="128" rx="6" fill="#fff" stroke="#d6dfe9"/><rect x="14" y="38" width="4" height="128" fill="#1a73e8"/>
+              <rect x="22" y="48" width="34" height="5" rx="2.5" fill="#0D2A48"/><rect x="22" y="60" width="44" height="12" rx="3" fill="#eef3fb"/><rect x="22" y="76" width="44" height="12" rx="3" fill="#eef3fb"/><rect x="22" y="92" width="44" height="12" rx="3" fill="#eef3fb"/>
+            </g>
+            <text x="86" y="106" font-family="Inter,Arial" font-size="9" fill="#9fb0c0">Gate 1</text>
+            <path d="M80 100 h14" stroke="#1a73e8" stroke-width="1.5" stroke-dasharray="2 2"/>
+            <g><rect x="102" y="38" width="58" height="128" rx="6" fill="#fff" stroke="#d6dfe9"/><rect x="102" y="38" width="4" height="128" fill="#0f9d58"/><rect x="110" y="48" width="34" height="5" rx="2.5" fill="#0D2A48"/><rect x="110" y="60" width="44" height="12" rx="3" fill="#eafaf0"/><rect x="110" y="76" width="44" height="12" rx="3" fill="#eafaf0"/></g>
+            <g><rect x="176" y="38" width="58" height="128" rx="6" fill="#fff" stroke="#d6dfe9"/><rect x="176" y="38" width="4" height="128" fill="#c77700"/><rect x="184" y="48" width="34" height="5" rx="2.5" fill="#0D2A48"/><rect x="184" y="60" width="44" height="12" rx="3" fill="#fff3e0"/><rect x="184" y="76" width="44" height="12" rx="3" fill="#fff3e0"/><rect x="184" y="92" width="44" height="12" rx="3" fill="#fff3e0"/></g>
+            <g><rect x="250" y="38" width="58" height="128" rx="6" fill="#fff" stroke="#d6dfe9"/><rect x="250" y="38" width="4" height="128" fill="#8b3fd4"/><rect x="258" y="48" width="34" height="5" rx="2.5" fill="#0D2A48"/><rect x="258" y="60" width="44" height="12" rx="3" fill="#f4ecfd"/></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">RACI Workflow Dashboard v1.0</div><div class="d">Full deployment lifecycle — 6 stages, 6 gates, 112 actions, 413 tasks, 189 subtasks. Search &amp; drill-down.</div><div class="lk">Open dashboard →</div></div>
+      </a>
+
+      <a class="card" href="#systems" data-kw="systems architecture diagram integrations zoho bullhorn ukg corpay netsuite okta poc scope">
+        <div class="thumb"><span class="tag">Live</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#f2f5f9"/>
+            <g fill="#fff" stroke="#c9d6e4"><rect x="30" y="30" width="62" height="30" rx="6"/><rect x="128" y="22" width="64" height="30" rx="6"/><rect x="228" y="34" width="62" height="30" rx="6"/><rect x="40" y="92" width="64" height="30" rx="6"/><rect x="132" y="108" width="64" height="30" rx="6"/><rect x="226" y="96" width="66" height="30" rx="6"/></g>
+            <g stroke="#1a73e8" stroke-width="1.6" fill="none" opacity=".8"><path d="M92 45 H128"/><path d="M192 40 H228"/><path d="M72 60 V92"/><path d="M160 52 V108"/><path d="M259 64 V96"/><path d="M104 107 H132"/><path d="M196 123 H226"/></g>
+            <rect x="128" y="108" width="68" height="30" rx="6" fill="none" stroke="#0f9d58" stroke-width="3"/>
+            <g fill="#0D2A48"><rect x="40" y="42" width="34" height="5" rx="2.5"/><rect x="138" y="34" width="40" height="5" rx="2.5"/><rect x="238" y="46" width="34" height="5" rx="2.5"/></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">Systems Architecture Diagram</div><div class="d">Post-migration system map (Zoho, Bullhorn, UKG, Corpay, NetSuite, Okta) with the POC scope highlighted in green.</div><div class="lk">View diagram ↓</div></div>
+      </a>
+
+      <a class="card" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/dependencies/" data-kw="workflow dependency analysis parallel independent dependent sequencing">
+        <div class="thumb"><span class="tag">Live</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#f2f5f9"/>
+            <g stroke="#8fa8c4" stroke-width="1.4" opacity=".8"><path d="M60 90 L130 44"/><path d="M60 90 L130 90"/><path d="M60 90 L130 138"/><path d="M130 44 L210 66"/><path d="M130 90 L210 66"/><path d="M130 90 L210 120"/><path d="M130 138 L210 120"/><path d="M210 66 L272 92"/><path d="M210 120 L272 92"/></g>
+            <g><circle cx="60" cy="90" r="12" fill="#1a73e8"/><circle cx="130" cy="44" r="10" fill="#0f9d58"/><circle cx="130" cy="90" r="10" fill="#0f9d58"/><circle cx="130" cy="138" r="10" fill="#0f9d58"/><circle cx="210" cy="66" r="10" fill="#c77700"/><circle cx="210" cy="120" r="10" fill="#c77700"/><circle cx="272" cy="92" r="12" fill="#8b3fd4"/></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">Workflow Dependency Analysis</div><div class="d">Tasks categorized parallel / independent / dependent, with the sequencing and structural work ahead.</div><div class="lk">Open analysis →</div></div>
+      </a>
+
+      <a class="card" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/huffmaster_automation_analysis/" data-kw="automation ai opportunity analysis leakage manual handoffs candidates">
+        <div class="thumb"><span class="tag">Live</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#f2f5f9"/><rect x="0" y="0" width="320" height="26" fill="#fff"/><rect x="14" y="10" width="110" height="7" rx="3.5" fill="#0D2A48"/>
+            <g><rect x="26" y="52" width="230" height="14" rx="4" fill="#0f9d58"/><rect x="26" y="78" width="180" height="14" rx="4" fill="#1a73e8"/><rect x="26" y="104" width="140" height="14" rx="4" fill="#4da3ff"/><rect x="26" y="130" width="96" height="14" rx="4" fill="#c77700"/></g>
+            <g fill="#7d8ea0" font-family="Inter,Arial" font-size="9"><text x="262" y="63">92%</text><text x="212" y="89">71%</text><text x="172" y="115">55%</text><text x="128" y="141">38%</text></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">Automation &amp; AI Opportunity Analysis</div><div class="d">Where the manual handoffs and leakage live, ranked by the highest-value automation candidates.</div><div class="lk">Open analysis →</div></div>
+      </a>
+
+      <a class="card" href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/plan.html" data-kw="example project plan gantt calendar checklist 60 day poc">
+        <div class="thumb"><span class="tag">Live</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#f2f5f9"/><rect x="0" y="0" width="320" height="26" fill="#fff"/><rect x="14" y="10" width="80" height="7" rx="3.5" fill="#0D2A48"/>
+            <g stroke="#e0e7ef"><path d="M96 26 V170"/><path d="M156 26 V170"/><path d="M216 26 V170"/><path d="M276 26 V170"/></g>
+            <g><rect x="30" y="44" width="120" height="12" rx="4" fill="#1a73e8"/><rect x="70" y="66" width="130" height="12" rx="4" fill="#0f9d58"/><rect x="120" y="88" width="120" height="12" rx="4" fill="#4da3ff"/><rect x="150" y="110" width="120" height="12" rx="4" fill="#c77700"/><rect x="90" y="132" width="90" height="12" rx="4" fill="#8b3fd4"/></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">Example 60-Day Project Plan</div><div class="d">Illustrative POC plan across Gantt, calendar, and checklist views.</div><div class="lk">Open plan →</div></div>
+      </a>
+
+      <div class="card" data-kw="lean payroll lab demo app reconciliation login runs discrepancy">
+        <div class="thumb"><span class="tag local">Local</span>
+          <svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
+            <rect width="320" height="180" fill="#0d1520"/><rect x="0" y="0" width="82" height="180" fill="#111c27"/>
+            <g fill="#2a3a4a"><rect x="14" y="18" width="54" height="8" rx="4"/><rect x="14" y="40" width="40" height="6" rx="3"/><rect x="14" y="54" width="46" height="6" rx="3"/><rect x="14" y="68" width="36" height="6" rx="3"/></g>
+            <rect x="98" y="18" width="120" height="10" rx="5" fill="#e8eef4"/>
+            <g><rect x="98" y="44" width="64" height="46" rx="8" fill="#16212c" stroke="#28394a"/><rect x="170" y="44" width="64" height="46" rx="8" fill="#16212c" stroke="#28394a"/><rect x="242" y="44" width="64" height="46" rx="8" fill="#16212c" stroke="#28394a"/><rect x="108" y="56" width="30" height="14" rx="4" fill="#37c98b"/><rect x="180" y="56" width="30" height="14" rx="4" fill="#5aa2ff"/><rect x="252" y="56" width="30" height="14" rx="4" fill="#f2b33d"/></g>
+            <rect x="98" y="104" width="208" height="58" rx="8" fill="#16212c" stroke="#28394a"/><g fill="#2a3a4a"><rect x="110" y="116" width="184" height="7" rx="3"/><rect x="110" y="130" width="150" height="7" rx="3"/><rect x="110" y="144" width="170" height="7" rx="3"/></g>
+          </svg>
+        </div>
+        <div class="cbody"><div class="t">Lean Payroll Lab — Demo App</div><div class="d">Reconciliation demo (login, runs, discrepancy, run-detail previews). Kept local; parked as a fast-follow after the POC.</div><div class="lk" style="color:var(--muted)">Huffmaster/demo-app/ (local only)</div></div>
+      </div>
+
     </div>
   </section>
 
-  <!-- PROPOSAL & DOCS -->
-  <section>
-    <h2><span class="num">02</span> Proposal &amp; project documents</h2>
+  <!-- ===== SYSTEMS (dedicated) ===== -->
+  <section class="blk" id="systems">
+    <h2><span class="num">02</span> Systems architecture</h2>
+    <p class="lead">The post-migration system map, rebuilt from Huffmaster's original Visio and confirmed swap-by-swap with Anna on the Jul 15 review. The green outline marks the Gate 1 → Gate 4 proof-of-concept scope: signed contract to workers deployed on site.</p>
+    <div class="syswrap">
+      <div class="svgframe" role="img" aria-label="Huffmaster systems architecture diagram">
+<svg viewBox="0 0 1560 1050" xmlns="http://www.w3.org/2000/svg" font-family="Inter,-apple-system,sans-serif" style="width:100%;height:auto">
+  <defs>
+    <linearGradient id="gMain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#625FED"/><stop offset="1" stop-color="#5DB9DB"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5C7186"/>
+    </marker>
+    <marker id="arrPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#625FED"/>
+    </marker>
+    <filter id="fShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0B223A" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- ================= ARROWS (under boxes) ================= -->
+  <!-- Website(s) <-> PM Tool -->
+  <path d="M750,130 L750,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Email (O365) -->
+  <path d="M850,80 L1215,80 L1215,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Zoho Ticketing -->
+  <path d="M850,65 L1440,65 L1440,180" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Website(s) -> Bullhorn (candidates) -->
+  <path d="M690,130 L690,155 L940,155 L940,700 L1010,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- PM Tool <-> CRM -->
+  <path d="M810,235 L880,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- CRM <-> Email -->
+  <path d="M1070,235 L1130,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Email -> Zoho Ticketing -->
+  <path d="M1300,235 L1360,235" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Zoho Ticketing <-> SMS/Automation (Sense) -->
+  <path d="M1440,290 L1440,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- CRM <-> Phone System -->
+  <path d="M965,290 L965,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Phone System -> Bullhorn -->
+  <path d="M990,460 L1050,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- CRM -> Zoho Projects (NEW) -> Bullhorn -->
+  <path d="M1000,290 L1015,560" stroke="#625FED" stroke-width="2" fill="none" marker-end="url(#arrPurple)"/>
+  <path d="M1050,640 L1070,740" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrPurple)"/>
+  <!-- Email -> Bullhorn -->
+  <path d="M1230,290 L1120,740" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- SMS (Sense) <-> Bullhorn -->
+  <path d="M1420,470 L1150,750" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- PM Tool -> SWORD -->
+  <path d="M700,290 L730,470" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Travel Tools (Sabre) <-> SWORD -->
+  <path d="M660,430 L700,470" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Corpay <-> Travel Tools -->
+  <path d="M510,345 L560,360" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Corpay -> ERP -->
+  <path d="M420,300 L390,220" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- HCM -> ERP (time bridge, live) -->
+  <path d="M380,470 L370,220" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- SWORD <-> HCM -->
+  <path d="M640,540 L490,530" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- SWORD -> Bullhorn -->
+  <path d="M880,570 L1000,760" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Faxing -> SWORD -->
+  <path d="M810,660 L790,600" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Okta -> HiHello -->
+  <path d="M500,705 L560,705" stroke="#5C7186" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <!-- Essium -> HCM (manual retype today) -->
+  <path d="M170,760 L350,590" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" fill="none" marker-end="url(#arrPurple)"/>
+  <!-- Essium <-> Bullhorn -->
+  <path d="M240,830 L980,800" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Bullhorn <-> Job Boards -->
+  <path d="M1170,805 L1280,805" stroke="#5C7186" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+  <!-- Bigly <-> Bullhorn (NEW) -->
+  <path d="M900,915 L1005,860" stroke="#625FED" stroke-width="2" fill="none" marker-start="url(#arrPurple)" marker-end="url(#arrPurple)"/>
+
+  <!-- ================= POC SCOPE HALOS (under boxes) ================= -->
+  <!-- Each in-scope box gets a bold green scope outline with a soft green glow. Box borders stay untouched. -->
+  <g>
+    <!-- PM Tool -->
+    <rect x="591" y="171" width="228" height="128" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="591" y="171" width="228" height="128" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- CRM -->
+    <rect x="871" y="171" width="208" height="128" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="871" y="171" width="208" height="128" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- SWORD (coordinating brain) -->
+    <rect x="629" y="459" width="262" height="152" rx="20" fill="#12B76A" opacity="0.11"/>
+    <rect x="629" y="459" width="262" height="152" rx="20" fill="none" stroke="#12B76A" stroke-width="5" opacity="1"/>
+    <!-- HCM -->
+    <rect x="291" y="461" width="208" height="138" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="291" y="461" width="208" height="138" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Corpay -->
+    <rect x="331" y="291" width="188" height="118" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="331" y="291" width="188" height="118" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Travel Tools -->
+    <rect x="551" y="321" width="188" height="118" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="551" y="321" width="188" height="118" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+    <!-- Bullhorn -->
+    <rect x="971" y="731" width="208" height="138" rx="18" fill="#12B76A" opacity="0.08"/>
+    <rect x="971" y="731" width="208" height="138" rx="18" fill="none" stroke="#12B76A" stroke-width="4.5" opacity="0.95"/>
+  </g>
+
+  <!-- ================= BOXES ================= -->
+  <!-- Website(s) -->
+  <g>
+    <rect x="650" y="55" width="200" height="75" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="750" y="88" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Website(s)</text>
+    <text x="750" y="108" font-size="11" fill="#4A5B6C" text-anchor="middle">Applications and inquiries in</text>
+  </g>
+
+  <!-- ERP NetSuite -->
+  <g>
+    <rect x="280" y="120" width="180" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="370" y="152" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">ERP</text>
+    <text x="370" y="170" font-size="12" fill="#4A5B6C" text-anchor="middle">(NetSuite)</text>
+    <text x="370" y="192" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Invoicing · UKG time bridge live</text>
+  </g>
+
+  <!-- PM Tool -->
+  <g>
+    <rect x="600" y="180" width="210" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="705" y="215" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">PM Tool</text>
+    <text x="705" y="233" font-size="12" fill="#4A5B6C" text-anchor="middle">(Forms / eSig)</text>
+    <text x="705" y="256" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Electronic contracts + proforma:</text>
+    <text x="705" y="271" font-size="10.5" fill="#4A5B6C" text-anchor="middle">headcount, locations, pricing</text>
+  </g>
+
+  <!-- CRM (now Zoho) -->
+  <g>
+    <rect x="880" y="180" width="190" height="110" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="900" y="192" width="150" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="975" y="205" font-size="9.5" font-weight="700" fill="#625FED" text-anchor="middle">now Zoho · was Dynamics</text>
+    <text x="975" y="232" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">CRM</text>
+    <text x="975" y="252" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Sales pipeline, contracts signed,</text>
+    <text x="975" y="267" font-size="10.5" fill="#4A5B6C" text-anchor="middle">deal flows on to the project tool</text>
+  </g>
+
+  <!-- Email O365 -->
+  <g>
+    <rect x="1130" y="180" width="170" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1215" y="222" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Email</text>
+    <text x="1215" y="240" font-size="12" fill="#4A5B6C" text-anchor="middle">(O365)</text>
+    <text x="1215" y="262" font-size="10.5" fill="#4A5B6C" text-anchor="middle">+ Teams, now used properly</text>
+  </g>
+
+  <!-- Zoho Ticketing -->
+  <g>
+    <rect x="1360" y="180" width="160" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1440" y="228" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Zoho</text>
+    <text x="1440" y="246" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Ticketing</text>
+  </g>
+
+  <!-- Corpay (was Concur) -->
+  <g>
+    <rect x="340" y="300" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="356" y="312" width="90" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="401" y="325" font-size="10" font-weight="700" fill="#625FED" text-anchor="middle">was Concur</text>
+    <text x="425" y="352" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Corpay</text>
+    <text x="425" y="372" font-size="10" fill="#4A5B6C" text-anchor="middle">Virtual card per job per hotel,</text>
+    <text x="425" y="387" font-size="10" fill="#4A5B6C" text-anchor="middle">auto-coded; was 20-40k lines</text>
+  </g>
+
+  <!-- Travel Tools Sabre -->
+  <g>
+    <rect x="560" y="330" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="645" y="362" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Travel Tools</text>
+    <text x="645" y="380" font-size="12" fill="#4A5B6C" text-anchor="middle">(Sabre)</text>
+    <text x="645" y="402" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Own travel agency license</text>
+  </g>
+
+  <!-- Phone System -->
+  <g>
+    <rect x="880" y="360" width="170" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="965" y="398" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Phone</text>
+    <text x="965" y="416" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">System</text>
+    <text x="965" y="438" font-size="9.5" fill="#8FA3B1" text-anchor="middle">out of POC scope</text>
+  </g>
+
+  <!-- SMS/Automation Sense -->
+  <g>
+    <rect x="1360" y="360" width="160" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1440" y="395" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">SMS /</text>
+    <text x="1440" y="413" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Automation</text>
+    <text x="1440" y="431" font-size="12" fill="#4A5B6C" text-anchor="middle">(Sense)</text>
+    <text x="1440" y="452" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Mass texts to candidates</text>
+  </g>
+
+  <!-- HCM (now UKG Pro) -->
+  <g>
+    <rect x="300" y="470" width="190" height="120" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="318" y="482" width="154" height="18" rx="9" fill="rgba(98,95,237,0.08)" stroke="#625FED" stroke-width="1"/>
+    <text x="395" y="495" font-size="9.5" font-weight="700" fill="#625FED" text-anchor="middle">now UKG Pro · was SyncHR</text>
+    <text x="395" y="522" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">HCM</text>
+    <text x="395" y="542" font-size="10" fill="#4A5B6C" text-anchor="middle">Payroll live and smooth · T&amp;A adapting</text>
+    <text x="395" y="557" font-size="10" fill="#4A5B6C" text-anchor="middle">Onboarding + perf mid-rollout</text>
+    <text x="395" y="572" font-size="10" fill="#4A5B6C" text-anchor="middle">Barcode clock · TimeStation retiring</text>
+  </g>
+
+  <!-- SWORD -->
+  <g>
+    <rect x="640" y="470" width="240" height="130" rx="14" fill="#FFFFFF" stroke="url(#gMain)" stroke-width="3"/>
+    <text x="760" y="491" font-size="10.5" font-weight="700" fill="#625FED" text-anchor="middle">Cascade Enterprise Agents</text>
+    <text x="760" y="513" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Huffmaster OS</text>
+    <text x="760" y="531" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">(SWORD)</text>
+    <text x="760" y="549" font-size="9.5" font-family="'JetBrains Mono',monospace" fill="#625FED" text-anchor="middle">AGENTIC LAYER · TO BUILD</text>
+    <text x="760" y="567" font-size="10" fill="#4A5B6C" text-anchor="middle">Record keeper · event triggers ·</text>
+    <text x="760" y="582" font-size="10" fill="#4A5B6C" text-anchor="middle">role guidance · RACI FAQ</text>
+  </g>
+
+  <!-- Okta -->
+  <g>
+    <rect x="360" y="660" width="140" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="430" y="698" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Okta</text>
+    <text x="430" y="720" font-size="10.5" fill="#4A5B6C" text-anchor="middle">SSO live, all apps</text>
+  </g>
+
+  <!-- HiHello -->
+  <g>
+    <rect x="560" y="660" width="140" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="630" y="710" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">HiHello</text>
+  </g>
+
+  <!-- Faxing xMedius -->
+  <g>
+    <rect x="740" y="660" width="150" height="90" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="815" y="698" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Faxing</text>
+    <text x="815" y="716" font-size="12" fill="#4A5B6C" text-anchor="middle">(xMedius)</text>
+  </g>
+
+  <!-- Onboarding Tool Essium -->
+  <g>
+    <rect x="60" y="760" width="180" height="110" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="150" y="795" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Onboarding Tool</text>
+    <text x="150" y="813" font-size="12" fill="#4A5B6C" text-anchor="middle">(Essium)</text>
+    <text x="150" y="835" font-size="10.5" fill="#625FED" text-anchor="middle">Handoff to HCM is retyped</text>
+    <text x="150" y="850" font-size="10.5" fill="#625FED" text-anchor="middle">by hand today · top target</text>
+  </g>
+
+  <!-- Bullhorn -->
+  <g>
+    <rect x="980" y="740" width="190" height="120" rx="12" fill="#FFFFFF" stroke="#0B223A" stroke-width="2"/>
+    <text x="1075" y="782" font-size="16" font-weight="700" fill="#0B223A" text-anchor="middle">Bullhorn</text>
+    <text x="1075" y="802" font-size="10" fill="#4A5B6C" text-anchor="middle">ATS hub · "Hire Now" · auto job</text>
+    <text x="1075" y="817" font-size="10" fill="#4A5B6C" text-anchor="middle">creation exists, needs the</text>
+    <text x="1075" y="832" font-size="10" fill="#4A5B6C" text-anchor="middle">staffing-order trigger</text>
+    <text x="1075" y="850" font-size="10" font-family="'JetBrains Mono',monospace" fill="#625FED" text-anchor="middle">8-9 internal recruiters</text>
+  </g>
+
+  <!-- Job Boards -->
+  <g>
+    <rect x="1280" y="760" width="180" height="100" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1.5"/>
+    <text x="1370" y="798" font-size="15" font-weight="700" fill="#0B223A" text-anchor="middle">Job Boards</text>
+    <text x="1370" y="816" font-size="12" fill="#4A5B6C" text-anchor="middle">(JobRobotix)</text>
+  </g>
+
+  <!-- Zoho Projects NEW -->
+  <g>
+    <rect x="950" y="560" width="190" height="80" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="966" y="572" width="46" height="18" rx="9" fill="#625FED"/>
+    <text x="989" y="585" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="1045" y="612" font-size="14" font-weight="700" fill="#0B223A" text-anchor="middle">Zoho Projects</text>
+    <text x="1045" y="629" font-size="10.5" fill="#4A5B6C" text-anchor="middle">Signed deal moves here from CRM</text>
+  </g>
+
+  <!-- Bigly NEW -->
+  <g>
+    <rect x="720" y="880" width="190" height="100" rx="12" fill="#FFFFFF" stroke="#625FED" stroke-width="2"/>
+    <rect x="736" y="892" width="46" height="18" rx="9" fill="#625FED"/>
+    <text x="759" y="905" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="815" y="930" font-size="14" font-weight="700" fill="#0B223A" text-anchor="middle">Bigly</text>
+    <text x="815" y="948" font-size="10" fill="#4A5B6C" text-anchor="middle">AI calling for mass recruiting;</text>
+    <text x="815" y="963" font-size="10" fill="#4A5B6C" text-anchor="middle">SMS and email next</text>
+  </g>
+
+  <!-- ================= STEP BADGES (on scope boxes) ================= -->
+  <!-- 1: Contract (PM Tool) -->
+  <g>
+    <circle cx="600" cy="180" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="600" y="187" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+  </g>
+  <!-- 2: CRM (Zoho) -->
+  <g>
+    <circle cx="880" cy="180" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="880" y="187" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+  </g>
+  <!-- 3: Recruiting (Bullhorn) -->
+  <g>
+    <circle cx="980" cy="740" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="980" y="747" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+  </g>
+  <!-- 4: HCM setup (UKG) -->
+  <g>
+    <circle cx="300" cy="470" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="300" y="477" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+  </g>
+  <!-- 5A: Corpay -->
+  <g>
+    <circle cx="340" cy="300" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="340" y="306" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">5A</text>
+  </g>
+  <!-- 5B: Travel Tools (Sabre) -->
+  <g>
+    <circle cx="560" cy="330" r="21" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="560" y="336" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">5B</text>
+  </g>
+  <!-- SWORD coordinating-hub marker (star) -->
+  <g>
+    <circle cx="640" cy="470" r="22" fill="url(#gMain)" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="640" y="478" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">&#9733;</text>
+  </g>
+
+  <!-- ================= POC SCOPE CALLOUT (top-left empty space) ================= -->
+  <g filter="url(#fShadow)">
+    <rect x="60" y="60" width="215" height="262" rx="14" fill="#FFFFFF" stroke="url(#gMain)" stroke-width="2"/>
+    <text x="76" y="90" font-size="13" font-weight="700" fill="url(#gMain)">PROOF OF CONCEPT</text>
+    <text x="76" y="108" font-size="13" font-weight="700" fill="url(#gMain)">SCOPE</text>
+    <line x1="76" y1="118" x2="259" y2="118" stroke="url(#gMain)" stroke-width="2"/>
+    <text x="76" y="137" font-size="11" font-weight="700" fill="#0B223A">Gate 1 &#8594; Gate 4 spine</text>
+    <text x="76" y="153" font-size="9.5" fill="#4A5B6C">Signed contract &#8594; deployed on site</text>
+    <text x="76" y="176" font-size="9.5" font-weight="700" fill="#0B223A">Cascade Enterprise Agents (SWORD)</text>
+    <text x="76" y="189" font-size="9.5" font-weight="700" fill="#0B223A">coordinate these hand-offs:</text>
+    <text x="76" y="210" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">1</tspan>  Contract (PM Tool)</text>
+    <text x="76" y="228" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">2</tspan>  CRM (Zoho)</text>
+    <text x="76" y="246" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">3</tspan>  Recruiting (Bullhorn)</text>
+    <text x="76" y="264" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">4</tspan>  HCM setup (UKG)</text>
+    <text x="76" y="282" font-size="10.5" fill="#0B223A"><tspan fill="#625FED" font-weight="700">5A</tspan> Corpay &#183; <tspan fill="#625FED" font-weight="700">5B</tspan> Travel</text>
+    <text x="76" y="304" font-size="9" font-style="italic" fill="#8FA3B1">Phone system: out of scope</text>
+  </g>
+
+  <!-- ================= LEGEND ================= -->
+  <g>
+    <rect x="60" y="990" width="1440" height="50" rx="12" fill="#FFFFFF" stroke="#C2CCD6" stroke-width="1"/>
+    <line x1="80" y1="1015" x2="116" y2="1015" stroke="#5C7186" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="124" y="1019" font-size="12" fill="#4A5B6C">Original Visio link</text>
+    <line x1="300" y1="1015" x2="336" y2="1015" stroke="#625FED" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrPurple)"/>
+    <text x="344" y="1019" font-size="12" fill="#4A5B6C">Manual today &#8594; Sword target</text>
+    <rect x="650" y="1005" width="64" height="20" rx="10" fill="rgba(98,95,237,0.08)" stroke="#625FED"/>
+    <text x="682" y="1019" font-size="11" font-weight="700" fill="#625FED" text-anchor="middle">now X</text>
+    <text x="722" y="1019" font-size="12" fill="#4A5B6C">Replaced since Visio</text>
+    <rect x="940" y="1005" width="52" height="20" rx="10" fill="#625FED"/>
+    <text x="966" y="1019" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">NEW</text>
+    <text x="1000" y="1019" font-size="12" fill="#4A5B6C">Added since Visio</text>
+    <rect x="1200" y="1004" width="32" height="22" rx="8" fill="#12B76A" opacity="0.10"/>
+    <rect x="1200" y="1004" width="32" height="22" rx="8" fill="none" stroke="#12B76A" stroke-width="4"/>
+    <text x="1242" y="1019" font-size="12" fill="#4A5B6C">POC scope · Cascade agents (Gate 1&#8594;4)</text>
+  </g>
+</svg>
+      </div>
+      <div class="syscap">
+        <div class="legend">
+          <span class="swatch"><i style="background:#0f9d58"></i> POC scope (Gate 1–4)</span>
+          <span class="swatch"><i style="background:#1a73e8"></i> System of record</span>
+          <span class="swatch"><i style="background:#c77700"></i> Manual handoff today</span>
+        </div>
+        <a href="https://daviddlr-lab.github.io/Huffmaster-RACI-Dashboard/systems-architecture/">Open full-screen diagram →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DOCUMENTS ===== -->
+  <section class="blk" id="documents">
+    <h2><span class="num">03</span> Proposal &amp; project documents</h2>
     <p class="lead">Internal working files in the Drive folder <a href="https://drive.google.com/drive/folders/1ouXltA4X8hqvEiptAyH0JnqnO4OyxqCM">Huffmaster – Project Resources</a>. Drive links open when signed in as david@cascadeclarity.ai.</p>
-    <div class="grid">
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Huffmaster Proposal (current)</div><div class="d">The four-month POC proposal document.</div><a class="lk" href="https://docs.google.com/document/d/1uPo2M8BLw59wdZBRt2A-KW4migUWznz3hSjWPCZW76M/edit">Open doc →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Proposal — POC-CT variant</div><div class="d">Contract-to-CRM scoped proposal draft.</div><a class="lk" href="https://docs.google.com/document/d/1J8cB9T9O6MxPhUBYTkxLggvz_fX7Q3h0kh_jg0IhhZc/edit">Open doc →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Proposal Summary Deck</div><div class="d">PowerPoint summary of the proposal (shared-drive copy).</div><a class="lk" href="https://docs.google.com/presentation/d/1X7tvex3M3SOdkz7DR09ZS42suqfYjsyj78lKj22wCgQ/edit">Open deck →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Straw-Man Proposal (Jul 13)</div><div class="d">Early transcript-cited draft, meant to be torn apart and rebuilt.</div><a class="lk" href="https://docs.google.com/document/d/1rTAsCBHlaQcKy4GC4jr6CSxy4DvOzxBH6FaunsXs1qw/edit">Open doc →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Proposal / POC Outline</div><div class="d">Phased plan: ingest &amp; confirm → hire-to-deploy POC.</div><a class="lk" href="https://drive.google.com/file/d/1nGA2XK5Z61Kh2UXOrmuDacvKoKzlmJw5/view">Open (md) →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Cross-Reference Review</div><div class="d">Systems doc vs RACI workflow reconciliation.</div><a class="lk" href="https://docs.google.com/document/d/1QehkRS2YrHuvy9y3fBjlgAnnWYV-cG4lvMtqWcg3DSw/edit">Open doc →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Follow-Up Email (Anna &amp; Amy)</div><div class="d">Proposal, deck, and workflow analysis cover note.</div><a class="lk" href="https://drive.google.com/file/d/1zhH4b_RLqJJvC4xTi2moNBgP5Si11tjx/view">Open (md) →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Priced Proposal Email (Trevor)</div><div class="d">Separate pricing note to the budget holder.</div><a class="lk" href="https://drive.google.com/file/d/1LA6GXpBYJ6tjHC8upbcRoUOSjOwd1Y4r/view">Open (md) →</a></div>
+    <div class="grid" data-filter>
+
+      <a class="card" href="https://drive.google.com/file/d/1LNC3GEHWaUVkrC3DE82sB_qwgw3BPnzI/view" data-kw="resource summary catalog word pdf">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/summary.jpg" alt="Resource summary preview"></div>
+        <div class="cbody"><div class="t">Resource Summary (Word + PDF)</div><div class="d">This whole catalog as a formatted document — provenance, resource tables, meetings, status, pricing.</div><div class="lk">Open PDF →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1uPo2M8BLw59wdZBRt2A-KW4migUWznz3hSjWPCZW76M/edit" data-kw="huffmaster proposal current four month poc">
+        <div class="thumb"><span class="tag doc">Doc</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="104" y="20" width="112" height="150" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="122" y="38" width="62" height="9" rx="4" fill="#0D2A48"/><rect x="122" y="58" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="70" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="82" width="58" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="100" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="112" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="124" width="52" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="142" width="68" height="5" rx="2.5" fill="#dce4ed"/><rect x="14" y="14" width="42" height="20" rx="5" fill="#1a56c4"/><text x="35" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">DOC</text></svg></div>
+        <div class="cbody"><div class="t">Huffmaster Proposal (current)</div><div class="d">The four-month POC proposal document.</div><div class="lk">Open doc →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1J8cB9T9O6MxPhUBYTkxLggvz_fX7Q3h0kh_jg0IhhZc/edit" data-kw="proposal poc ct contract crm variant">
+        <div class="thumb"><span class="tag doc">Doc</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="104" y="20" width="112" height="150" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="122" y="38" width="62" height="9" rx="4" fill="#0D2A48"/><rect x="122" y="58" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="70" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="82" width="58" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="100" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="112" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="124" width="52" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="142" width="68" height="5" rx="2.5" fill="#dce4ed"/><rect x="14" y="14" width="42" height="20" rx="5" fill="#1a56c4"/><text x="35" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">DOC</text></svg></div>
+        <div class="cbody"><div class="t">Proposal — POC-CT variant</div><div class="d">Contract-to-CRM scoped proposal draft.</div><div class="lk">Open doc →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/presentation/d/1X7tvex3M3SOdkz7DR09ZS42suqfYjsyj78lKj22wCgQ/edit" data-kw="proposal summary deck powerpoint slides">
+        <div class="thumb"><span class="tag doc">Slides</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="66" y="34" width="188" height="112" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="84" y="54" width="96" height="10" rx="5" fill="#0D2A48"/><rect x="84" y="78" width="150" height="6" rx="3" fill="#cad5e1"/><rect x="84" y="92" width="150" height="6" rx="3" fill="#cad5e1"/><rect x="84" y="106" width="120" height="6" rx="3" fill="#cad5e1"/><rect x="84" y="122" width="60" height="12" rx="3" fill="#c2410c" opacity=".85"/><rect x="14" y="14" width="66" height="20" rx="5" fill="#c2410c"/><text x="47" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">SLIDES</text></svg></div>
+        <div class="cbody"><div class="t">Proposal Summary Deck</div><div class="d">PowerPoint summary of the proposal (shared-drive copy).</div><div class="lk">Open deck →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1nGA2XK5Z61Kh2UXOrmuDacvKoKzlmJw5/view" data-kw="proposal poc outline phased plan ingest hire deploy">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/poc_outline.jpg" alt="POC outline preview"></div>
+        <div class="cbody"><div class="t">Proposal / POC Outline</div><div class="d">Phased plan: ingest &amp; confirm, then the hire-to-deploy POC.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1rTAsCBHlaQcKy4GC4jr6CSxy4DvOzxBH6FaunsXs1qw/edit" data-kw="straw man proposal draft transcript cited">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/strawman.jpg" alt="Straw-man proposal preview"></div>
+        <div class="cbody"><div class="t">Straw-Man Proposal (Jul 13)</div><div class="d">Early transcript-cited draft, meant to be torn apart and rebuilt.</div><div class="lk">Open doc →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1QehkRS2YrHuvy9y3fBjlgAnnWYV-cG4lvMtqWcg3DSw/edit" data-kw="cross reference review systems doc raci">
+        <div class="thumb"><span class="tag doc">Doc</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="104" y="20" width="112" height="150" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="122" y="38" width="62" height="9" rx="4" fill="#0D2A48"/><rect x="122" y="58" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="70" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="82" width="58" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="100" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="112" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="124" width="52" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="142" width="68" height="5" rx="2.5" fill="#dce4ed"/><rect x="14" y="14" width="42" height="20" rx="5" fill="#1a56c4"/><text x="35" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">DOC</text></svg></div>
+        <div class="cbody"><div class="t">Cross-Reference Review</div><div class="d">Systems doc vs RACI workflow reconciliation.</div><div class="lk">Open doc →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1zhH4b_RLqJJvC4xTi2moNBgP5Si11tjx/view" data-kw="follow up email anna amy cover note">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/followup_email.jpg" alt="Follow-up email preview"></div>
+        <div class="cbody"><div class="t">Follow-Up Email (Anna &amp; Amy)</div><div class="d">Proposal, deck, and workflow-analysis cover note.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1LA6GXpBYJ6tjHC8upbcRoUOSjOwd1Y4r/view" data-kw="priced proposal email trevor pricing budget holder">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/priced_email.jpg" alt="Priced proposal email preview"></div>
+        <div class="cbody"><div class="t">Priced Proposal Email (Trevor)</div><div class="d">Separate pricing note to the budget holder.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
     </div>
   </section>
 
-  <!-- SOURCE ARTIFACTS -->
-  <section>
-    <h2><span class="num">03</span> Discovery &amp; source artifacts</h2>
+  <!-- ===== ARTIFACTS ===== -->
+  <section class="blk" id="artifacts">
+    <h2><span class="num">04</span> Discovery &amp; source artifacts</h2>
     <p class="lead">The raw material the analyses were built from.</p>
-    <div class="grid">
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Discovery Brief (Jul 10)</div><div class="d">The client in a paragraph, what they want, current systems.</div><a class="lk" href="https://drive.google.com/file/d/1kHhE6VrRgvZiyhngLLKrQVle6iDiKSAT/view">Open (md) →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Discovery Notes (Jul 10)</div><div class="d">Session notes: who we work with, the Sword vision, systems.</div><a class="lk" href="https://drive.google.com/file/d/1JLq1Xi1_PsSOEpw48si1qgjJUuxWRRAX/view">Open (md) →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Meeting Agenda (Jul 10)</div><div class="d">Consultative discovery agenda and opening statement.</div><a class="lk" href="https://drive.google.com/file/d/1eJW-QTdG9ei3UxRtkNbAD4MpMAiSrJNa/view">Open (md) →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">RACI Source Workbook (xlsm)</div><div class="d">AppSheet RACI rebuilt guide — source of the dashboards.</div><a class="lk" href="https://drive.google.com/file/d/1157eh4UTpketeSsh57j3sFKWAIsbfHV8/view">Open file →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Software &amp; System Breakdown (docx)</div><div class="d">Jul 14 revision of Huffmaster's system breakdown.</div><a class="lk" href="https://drive.google.com/file/d/15JyZ9hzOMdCy9RCGLppaAGk15OvHyEUJ/view">Open doc →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Workflow Dependencies (Sheet)</div><div class="d">Sequencing and structural dependency data.</div><a class="lk" href="https://docs.google.com/spreadsheets/d/1XEkAlh_LE_9hc_zX5-grNpkeN4qoblTWlD79t5-aFug/edit">Open sheet →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Automation Analysis (Sheet)</div><div class="d">Automation / AI opportunity scoring.</div><a class="lk" href="https://docs.google.com/spreadsheets/d/1Qp8-MFpuaqai-yqnzocEhNN-63SpwcXaQ5ZU2tcr3HM/edit">Open sheet →</a></div>
-      <div class="card"><span class="tag drive">Drive</span><div class="t">Integrations Diagram (Visio) &amp; PNG</div><div class="d">Source Visio plus the exported process-diagram image.</div><a class="lk" href="https://drive.google.com/file/d/1mAEqvSJNddUgnglzAvyLnYnwbGMdrGDW/view">Open PNG →</a></div>
+    <div class="grid" data-filter>
+
+      <a class="card" href="https://drive.google.com/file/d/1kHhE6VrRgvZiyhngLLKrQVle6iDiKSAT/view" data-kw="discovery brief client paragraph systems">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/discovery_brief.jpg" alt="Discovery brief preview"></div>
+        <div class="cbody"><div class="t">Discovery Brief (Jul 10)</div><div class="d">The client in a paragraph, what they want, current systems.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1JLq1Xi1_PsSOEpw48si1qgjJUuxWRRAX/view" data-kw="discovery notes sword vision systems who we work with">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/discovery_notes.jpg" alt="Discovery notes preview"></div>
+        <div class="cbody"><div class="t">Discovery Notes (Jul 10)</div><div class="d">Session notes: who we work with, the Sword vision, the systems.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1eJW-QTdG9ei3UxRtkNbAD4MpMAiSrJNa/view" data-kw="meeting agenda consultative discovery opening statement">
+        <div class="thumb"><span class="tag drive">Drive</span><img src="previews/agenda.jpg" alt="Agenda preview"></div>
+        <div class="cbody"><div class="t">Meeting Agenda (Jul 10)</div><div class="d">Consultative discovery agenda and opening statement.</div><div class="lk">Open (md) →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1157eh4UTpketeSsh57j3sFKWAIsbfHV8/view" data-kw="raci source workbook appsheet xlsm">
+        <div class="thumb"><span class="tag drive">Drive</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="72" y="30" width="176" height="126" rx="4" fill="#fff" stroke="#cdd9e6"/><rect x="72" y="30" width="176" height="22" fill="#0D2A48"/><rect x="72" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="72" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="78" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="204" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="104" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="160" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="14" y="14" width="50" height="20" rx="5" fill="#0f9d58"/><text x="39" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">XLSM</text></svg></div>
+        <div class="cbody"><div class="t">RACI Source Workbook (xlsm)</div><div class="d">AppSheet RACI rebuilt guide — source of the dashboards.</div><div class="lk">Open file →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/15JyZ9hzOMdCy9RCGLppaAGk15OvHyEUJ/view" data-kw="software system breakdown docx revision">
+        <div class="thumb"><span class="tag drive">Drive</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="104" y="20" width="112" height="150" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="122" y="38" width="62" height="9" rx="4" fill="#0D2A48"/><rect x="122" y="58" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="70" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="82" width="58" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="100" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="112" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="124" width="52" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="142" width="68" height="5" rx="2.5" fill="#dce4ed"/><rect x="14" y="14" width="50" height="20" rx="5" fill="#1a56c4"/><text x="39" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">DOCX</text></svg></div>
+        <div class="cbody"><div class="t">Software &amp; System Breakdown (docx)</div><div class="d">Jul 14 revision of Huffmaster's system breakdown.</div><div class="lk">Open doc →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1XEkAlh_LE_9hc_zX5-grNpkeN4qoblTWlD79t5-aFug/edit" data-kw="workflow dependencies sheet sequencing structural data">
+        <div class="thumb"><span class="tag doc">Sheet</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="72" y="30" width="176" height="126" rx="4" fill="#fff" stroke="#cdd9e6"/><rect x="72" y="30" width="176" height="22" fill="#0D2A48"/><rect x="72" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="72" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="78" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="204" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="104" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="160" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="14" y="14" width="58" height="20" rx="5" fill="#0f9d58"/><text x="43" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">SHEET</text></svg></div>
+        <div class="cbody"><div class="t">Workflow Dependencies (Sheet)</div><div class="d">Sequencing and structural dependency data.</div><div class="lk">Open sheet →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1Qp8-MFpuaqai-yqnzocEhNN-63SpwcXaQ5ZU2tcr3HM/edit" data-kw="automation analysis sheet ai opportunity scoring">
+        <div class="thumb"><span class="tag doc">Sheet</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="72" y="30" width="176" height="126" rx="4" fill="#fff" stroke="#cdd9e6"/><rect x="72" y="30" width="176" height="22" fill="#0D2A48"/><rect x="72" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="52" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="52" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="72" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="78" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="204" y="78" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="116" y="104" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="160" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="104" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="72" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="116" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="160" y="130" width="44" height="26" fill="#ffffff" stroke="#dbe6ee"/><rect x="204" y="130" width="44" height="26" fill="#eafaf0" stroke="#dbe6ee"/><rect x="14" y="14" width="58" height="20" rx="5" fill="#0f9d58"/><text x="43" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">SHEET</text></svg></div>
+        <div class="cbody"><div class="t">Automation Analysis (Sheet)</div><div class="d">Automation / AI opportunity scoring.</div><div class="lk">Open sheet →</div></div>
+      </a>
+
+      <a class="card" href="https://drive.google.com/file/d/1mAEqvSJNddUgnglzAvyLnYnwbGMdrGDW/view" data-kw="systems process diagram png image visio export">
+        <div class="thumb"><span class="tag drive">Drive</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="78" y="36" width="164" height="108" rx="8" fill="#fff" stroke="#cdd9e6"/><circle cx="118" cy="70" r="12" fill="#f2b33d"/><path d="M90 138 L138 96 L172 128 L206 84 L232 138 Z" fill="#7c3aed" opacity=".55"/><path d="M150 138 L196 104 L232 138 Z" fill="#7c3aed"/><rect x="14" y="14" width="42" height="20" rx="5" fill="#7c3aed"/><text x="35" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">IMG</text></svg></div>
+        <div class="cbody"><div class="t">Systems Process Diagram (PNG) + Visio</div><div class="d">Exported process-diagram image and the source Visio (vsdx).</div><div class="lk">Open PNG →</div></div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1ydCUKtTDTaAa1QzIsKTh-MQMI4qMK5aXJJqAtZgmYg4/edit" data-kw="prospect brief trevor fandale pre meeting">
+        <div class="thumb"><span class="tag doc">Doc</span><svg class="cov" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#eef3f8"/><rect x="104" y="20" width="112" height="150" rx="7" fill="#fff" stroke="#cdd9e6"/><rect x="122" y="38" width="62" height="9" rx="4" fill="#0D2A48"/><rect x="122" y="58" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="70" width="80" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="82" width="58" height="5" rx="2.5" fill="#c7d2de"/><rect x="122" y="100" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="112" width="80" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="124" width="52" height="5" rx="2.5" fill="#dce4ed"/><rect x="122" y="142" width="68" height="5" rx="2.5" fill="#dce4ed"/><rect x="14" y="14" width="42" height="20" rx="5" fill="#1a56c4"/><text x="35" y="28" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="800" fill="#fff">DOC</text></svg></div>
+        <div class="cbody"><div class="t">Prospect Brief — Trevor Fandale</div><div class="d">Early pre-meeting brief on Trevor / Huffmaster.</div><div class="lk">Open doc →</div></div>
+      </a>
+
     </div>
   </section>
 
-  <!-- MEETINGS -->
-  <section>
-    <h2><span class="num">04</span> Meeting record</h2>
-    <p class="lead">Google Meet sessions with Gemini notes. Times as labeled (PDT/PST); durations from each transcript. Full write-up: <a href="https://drive.google.com/file/d/1_1i9I4rU-Ct00MrzN7R7xu4pDTq-For6/view">Huffmaster_Meetings.md</a>. <span class="flag">Flagged</span> rows are mislabeled or off-thread (see footnotes).</p>
+  <!-- ===== MEETINGS ===== -->
+  <section class="blk" id="meetings">
+    <h2><span class="num">05</span> Meeting record</h2>
+    <p class="lead">23 Google Meet sessions with Gemini notes, January to July 2026. Times as labeled (PDT/PST); durations from each transcript. Full write-up: <a href="https://drive.google.com/file/d/1_1i9I4rU-Ct00MrzN7R7xu4pDTq-For6/view">Huffmaster_Meetings.md</a>.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">23</div><div class="l">Total meetings</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">With transcripts</div></div>
+      <div class="stat hl"><div class="n">20h 44m</div><div class="l">Transcript captured</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Client-facing sessions</div></div>
+    </div>
     <div class="tablewrap">
-    <table>
-      <thead><tr><th>#</th><th>Date</th><th>Start</th><th>Meeting</th><th>Dur.</th><th>Attendees</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td class="mono">1</td><td class="mono">2026-01-20</td><td class="mono">10:28 PST</td><td>Kelly / John / David <span class="flag">*</span></td><td class="mono">—</td><td>Kelly, John, David</td><td><a href="https://drive.google.com/file/d/1AI-0Ao-KinNnxEAEl3hUXbldkCiW3MX7/view">Recording</a></td></tr>
-        <tr><td class="mono">2</td><td class="mono">2026-05-18</td><td class="mono">09:34 PDT</td><td>Meet w/ Kelly (Huffmaster origin)</td><td class="mono">—</td><td>David, John, Kelly</td><td><a href="https://docs.google.com/document/d/1Gm1ICMouiB0y_vrgGvnQ5W4-6mV4-mGrvxsOS1HJJ7E/edit">Notes</a></td></tr>
-        <tr><td class="mono">3</td><td class="mono">2026-05-27</td><td class="mono">08:59 PDT</td><td>David &amp; Kelly (Trevor prep)</td><td class="mono">42:35</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1vfyi3MHJSYAqFjdKpo3iNUYpza99QkS1CrhoE9TMyUs/edit">Notes</a></td></tr>
-        <tr><td class="mono">4</td><td class="mono">2026-05-27</td><td class="mono">09:57 PDT</td><td>"Trevor, John, &amp; Kelly" <span class="flag">†</span></td><td class="mono">1:34:59</td><td>Internal (mislabeled)</td><td><a href="https://docs.google.com/document/d/1YwWxwNSMXIO3JITDmb3J1ICMF574X6YfIbXuRKfHwjw/edit">Notes</a></td></tr>
-        <tr><td class="mono">5</td><td class="mono">2026-06-05</td><td class="mono">09:58 PDT</td><td>Trevor discovery (POC agreed)</td><td class="mono">34:15</td><td>Trevor, John, Kelly, David</td><td><a href="https://docs.google.com/document/d/1pPKjhkcWM1q76Ph4wDCKi7WJHWm5n4LnaeyZNjAw2n8/edit">Notes</a></td></tr>
-        <tr><td class="mono">6</td><td class="mono">2026-06-05</td><td class="mono">10:33 PDT</td><td>Trevor Debrief (engagement initiated)</td><td class="mono">15:21</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1Br1_73uJMgVsdIRtobEy-j-095OLQ3y1lPvejRy21pc/edit">Notes</a></td></tr>
-        <tr><td class="mono">7</td><td class="mono">2026-06-08</td><td class="mono">08:59 PDT</td><td>Kelly &amp; David (artifact repo idea)</td><td class="mono">1:00:52</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1Ghyy2k0EBSMVByCfHHBYFdZ-kL-WY7GL0u8SYGGSOHs/edit">Notes</a></td></tr>
-        <tr><td class="mono">8</td><td class="mono">2026-06-23</td><td class="mono">14:45 PDT</td><td>John MD files — Part 1</td><td class="mono">1:40:52</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/10SWyw90-mmDsSU5CP8ddLiN3NynzwEbrY_z5BEXSacE/edit">Notes</a></td></tr>
-        <tr><td class="mono">9</td><td class="mono">2026-06-24</td><td class="mono">08:16 PDT</td><td>John MD files — Part 2</td><td class="mono">2:15:37</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1f9BGt5nofwanChkgwO__vGXOtSt92zPLAgVun9J2_mw/edit">Notes</a></td></tr>
-        <tr><td class="mono">10</td><td class="mono">2026-06-26</td><td class="mono">14:58 PDT</td><td>Reconciliation methodology</td><td class="mono">2:01:11</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1A6xL1Db09ScnUglAS5EvfUGWDBl4oDNt-5iY3atVfXY/edit">Notes</a></td></tr>
-        <tr><td class="mono">11</td><td class="mono">2026-07-01</td><td class="mono">11:01 PDT</td><td>Scope refinement (surveillance pivot)</td><td class="mono">31:40</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1ZAxIVWkU9C9IVxHFPjNwng9nO1FkAse4Tv0gSHBF2bo/edit">Notes</a></td></tr>
-        <tr><td class="mono">12</td><td class="mono">2026-07-06</td><td class="mono">08:59 PDT</td><td>Trevor Prep (Kelly &amp; David)</td><td class="mono">1:29:08</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1jaEGxjqI6D-7BiIM7DSPtBgLh9UE0k9keXvu_h6BkfU/edit">Notes</a></td></tr>
-        <tr><td class="mono">13</td><td class="mono">2026-07-06</td><td class="mono">10:28 PDT</td><td>Trevor Prep (Kelly, John, David)</td><td class="mono">32:46</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1rzsKfCryffqt2LL9C_EhiETKECD3FA6npdekIP6OYs0/edit">Notes</a></td></tr>
-        <tr><td class="mono">14</td><td class="mono">2026-07-06</td><td class="mono">11:02 PDT</td><td>John &amp; David (platform / anchor) <span class="flag">‡</span></td><td class="mono">27:37</td><td>John, David</td><td><a href="https://docs.google.com/document/d/1ti8fkgcJVcxTyt3c7DIVmQh5Lgk9NoEPsqItsPXzT8E/edit">Notes</a></td></tr>
-        <tr><td class="mono">15</td><td class="mono">2026-07-10</td><td class="mono">07:27 PDT</td><td>Discovery: Systems &amp; Direction</td><td class="mono">42:20</td><td>Trevor, Anna, Amy, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1Vzknauqf_L46A9umRrjmRMt-FF-7gXwTzLunpAH-9UA/edit">Notes</a> · <a href="https://drive.google.com/file/d/1iAK8ykc9AzrYtyGQlwMT6t3ZvX9gOzQ4/view">Rec</a></td></tr>
-        <tr><td class="mono">16</td><td class="mono">2026-07-10</td><td class="mono">08:10 PDT</td><td>Post-Huffmaster debrief (JV LLC)</td><td class="mono">20:10</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1D9sZphOX5lZJfkoU59uG32jcepzZBDS7ktYDFfb4TJk/edit">Notes</a></td></tr>
-        <tr><td class="mono">17</td><td class="mono">2026-07-13</td><td class="mono">14:29 PDT</td><td>Digital Asset &amp; Leads (artifacts)</td><td class="mono">1:23:25</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1fuQma1ertenRIwxcnEaHDFfQL3Znumc6hhYF7zPs5Tk/edit">Notes</a></td></tr>
-        <tr><td class="mono">18</td><td class="mono">2026-07-14</td><td class="mono">09:29 PDT</td><td>Follow-Up (service model + budget)</td><td class="mono">30:22</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1YPYdDu-AwV3uFmsW99IwWdwBgitHYKKiNSPZsZZQ644/edit">Notes</a></td></tr>
-        <tr><td class="mono">19</td><td class="mono">2026-07-14</td><td class="mono">10:47 PDT</td><td>Artifacts Discovery (Kelly &amp; David)</td><td class="mono">1:13:36</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1M_0Bw8fsMxnrYS2WkhHBHAxAFUL6sDpAVdzrQuqRbTo/edit">Notes</a></td></tr>
-        <tr><td class="mono">20</td><td class="mono">2026-07-15</td><td class="mono">09:29 PDT</td><td>Artifacts Discovery w/ Anna</td><td class="mono">1:22:17</td><td>Anna, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1SNYXYWq_ZC4WTtIUqROn949k1NLVFnqGBXTNcOxb6I8/edit">Notes</a></td></tr>
-        <tr><td class="mono">21</td><td class="mono">2026-07-15</td><td class="mono">10:59 PDT</td><td>Proposal Review (internal)</td><td class="mono">37:28</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1240WS6AWFizcgzSH2cr04onST_bm3Jr1wRuCZfgFQJY/edit">Notes</a></td></tr>
-        <tr><td class="mono">22</td><td class="mono">2026-07-16</td><td class="mono">09:57 PDT</td><td>Project Follow-Up (client)</td><td class="mono">39:18</td><td>Trevor, Anna, Amy, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1uheqCSvIGMxBiVZMMI_SYZvyylMryIo4cLpgeRsJ1YY/edit">Notes</a> · <a href="https://drive.google.com/file/d/1hcTxASmuktDIL7V6LVln2D-v48P3LNZC/view">Rec</a></td></tr>
-        <tr><td class="mono">23</td><td class="mono">2026-07-16</td><td class="mono">10:37 PDT</td><td>Proposal Debrief (internal)</td><td class="mono">48:57</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1w5y9tBhSZVmHcIJC_Wr1f9sp8SksJ5F5hxVLTezXyRc/edit">Notes</a></td></tr>
-      </tbody>
-    </table>
+      <table id="mtable">
+        <thead><tr><th>#</th><th>Date</th><th>Start</th><th>Meeting</th><th>Dur.</th><th>Attendees</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">2026-01-20</td><td class="mono">10:28 PST</td><td>Kelly / John / David <span class="flag">*</span></td><td class="mono">—</td><td>Kelly, John, David</td><td><a href="https://drive.google.com/file/d/1AI-0Ao-KinNnxEAEl3hUXbldkCiW3MX7/view">Recording</a></td></tr>
+          <tr><td class="mono">2</td><td class="mono">2026-05-18</td><td class="mono">09:34 PDT</td><td>Meet w/ Kelly (Huffmaster origin)</td><td class="mono">—</td><td>David, John, Kelly</td><td><a href="https://docs.google.com/document/d/1Gm1ICMouiB0y_vrgGvnQ5W4-6mV4-mGrvxsOS1HJJ7E/edit">Notes</a></td></tr>
+          <tr><td class="mono">3</td><td class="mono">2026-05-27</td><td class="mono">08:59 PDT</td><td>David &amp; Kelly (Trevor prep)</td><td class="mono">42:35</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1vfyi3MHJSYAqFjdKpo3iNUYpza99QkS1CrhoE9TMyUs/edit">Notes</a></td></tr>
+          <tr><td class="mono">4</td><td class="mono">2026-05-27</td><td class="mono">09:57 PDT</td><td>"Trevor, John, &amp; Kelly" <span class="flag">†</span></td><td class="mono">1:34:59</td><td>Internal (mislabeled)</td><td><a href="https://docs.google.com/document/d/1YwWxwNSMXIO3JITDmb3J1ICMF574X6YfIbXuRKfHwjw/edit">Notes</a></td></tr>
+          <tr><td class="mono">5</td><td class="mono">2026-06-05</td><td class="mono">09:58 PDT</td><td>Trevor discovery (POC agreed)</td><td class="mono">34:15</td><td>Trevor, John, Kelly, David</td><td><a href="https://docs.google.com/document/d/1pPKjhkcWM1q76Ph4wDCKi7WJHWm5n4LnaeyZNjAw2n8/edit">Notes</a></td></tr>
+          <tr><td class="mono">6</td><td class="mono">2026-06-05</td><td class="mono">10:33 PDT</td><td>Trevor Debrief (engagement initiated)</td><td class="mono">15:21</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1Br1_73uJMgVsdIRtobEy-j-095OLQ3y1lPvejRy21pc/edit">Notes</a></td></tr>
+          <tr><td class="mono">7</td><td class="mono">2026-06-08</td><td class="mono">08:59 PDT</td><td>Kelly &amp; David (artifact repo idea)</td><td class="mono">1:00:52</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1Ghyy2k0EBSMVByCfHHBYFdZ-kL-WY7GL0u8SYGGSOHs/edit">Notes</a></td></tr>
+          <tr><td class="mono">8</td><td class="mono">2026-06-23</td><td class="mono">14:45 PDT</td><td>John MD files — Part 1</td><td class="mono">1:40:52</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/10SWyw90-mmDsSU5CP8ddLiN3NynzwEbrY_z5BEXSacE/edit">Notes</a></td></tr>
+          <tr><td class="mono">9</td><td class="mono">2026-06-24</td><td class="mono">08:16 PDT</td><td>John MD files — Part 2</td><td class="mono">2:15:37</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1f9BGt5nofwanChkgwO__vGXOtSt92zPLAgVun9J2_mw/edit">Notes</a></td></tr>
+          <tr><td class="mono">10</td><td class="mono">2026-06-26</td><td class="mono">14:58 PDT</td><td>Reconciliation methodology</td><td class="mono">2:01:11</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1A6xL1Db09ScnUglAS5EvfUGWDBl4oDNt-5iY3atVfXY/edit">Notes</a></td></tr>
+          <tr><td class="mono">11</td><td class="mono">2026-07-01</td><td class="mono">11:01 PDT</td><td>Scope refinement (surveillance pivot)</td><td class="mono">31:40</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1ZAxIVWkU9C9IVxHFPjNwng9nO1FkAse4Tv0gSHBF2bo/edit">Notes</a></td></tr>
+          <tr><td class="mono">12</td><td class="mono">2026-07-06</td><td class="mono">08:59 PDT</td><td>Trevor Prep (Kelly &amp; David)</td><td class="mono">1:29:08</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1jaEGxjqI6D-7BiIM7DSPtBgLh9UE0k9keXvu_h6BkfU/edit">Notes</a></td></tr>
+          <tr><td class="mono">13</td><td class="mono">2026-07-06</td><td class="mono">10:28 PDT</td><td>Trevor Prep (Kelly, John, David)</td><td class="mono">32:46</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1rzsKfCryffqt2LL9C_EhiETKECD3FA6npdekIP6OYs0/edit">Notes</a></td></tr>
+          <tr><td class="mono">14</td><td class="mono">2026-07-06</td><td class="mono">11:02 PDT</td><td>John &amp; David (platform / anchor) <span class="flag">‡</span></td><td class="mono">27:37</td><td>John, David</td><td><a href="https://docs.google.com/document/d/1ti8fkgcJVcxTyt3c7DIVmQh5Lgk9NoEPsqItsPXzT8E/edit">Notes</a></td></tr>
+          <tr><td class="mono">15</td><td class="mono">2026-07-10</td><td class="mono">07:27 PDT</td><td>Discovery: Systems &amp; Direction</td><td class="mono">42:20</td><td>Trevor, Anna, Amy, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1Vzknauqf_L46A9umRrjmRMt-FF-7gXwTzLunpAH-9UA/edit">Notes</a> · <a href="https://drive.google.com/file/d/1iAK8ykc9AzrYtyGQlwMT6t3ZvX9gOzQ4/view">Rec</a></td></tr>
+          <tr><td class="mono">16</td><td class="mono">2026-07-10</td><td class="mono">08:10 PDT</td><td>Post-Huffmaster debrief (JV LLC)</td><td class="mono">20:10</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1D9sZphOX5lZJfkoU59uG32jcepzZBDS7ktYDFfb4TJk/edit">Notes</a></td></tr>
+          <tr><td class="mono">17</td><td class="mono">2026-07-13</td><td class="mono">14:29 PDT</td><td>Digital Asset &amp; Leads (artifacts)</td><td class="mono">1:23:25</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1fuQma1ertenRIwxcnEaHDFfQL3Znumc6hhYF7zPs5Tk/edit">Notes</a></td></tr>
+          <tr><td class="mono">18</td><td class="mono">2026-07-14</td><td class="mono">09:29 PDT</td><td>Follow-Up (service model + budget)</td><td class="mono">30:22</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1YPYdDu-AwV3uFmsW99IwWdwBgitHYKKiNSPZsZZQ644/edit">Notes</a></td></tr>
+          <tr><td class="mono">19</td><td class="mono">2026-07-14</td><td class="mono">10:47 PDT</td><td>Artifacts Discovery (Kelly &amp; David)</td><td class="mono">1:13:36</td><td>David, Kelly</td><td><a href="https://docs.google.com/document/d/1M_0Bw8fsMxnrYS2WkhHBHAxAFUL6sDpAVdzrQuqRbTo/edit">Notes</a></td></tr>
+          <tr><td class="mono">20</td><td class="mono">2026-07-15</td><td class="mono">09:29 PDT</td><td>Artifacts Discovery w/ Anna</td><td class="mono">1:22:17</td><td>Anna, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1SNYXYWq_ZC4WTtIUqROn949k1NLVFnqGBXTNcOxb6I8/edit">Notes</a></td></tr>
+          <tr><td class="mono">21</td><td class="mono">2026-07-15</td><td class="mono">10:59 PDT</td><td>Proposal Review (internal)</td><td class="mono">37:28</td><td>Kelly, John, David</td><td><a href="https://docs.google.com/document/d/1240WS6AWFizcgzSH2cr04onST_bm3Jr1wRuCZfgFQJY/edit">Notes</a></td></tr>
+          <tr><td class="mono">22</td><td class="mono">2026-07-16</td><td class="mono">09:57 PDT</td><td>Project Follow-Up (client)</td><td class="mono">39:18</td><td>Trevor, Anna, Amy, John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1uheqCSvIGMxBiVZMMI_SYZvyylMryIo4cLpgeRsJ1YY/edit">Notes</a> · <a href="https://drive.google.com/file/d/1hcTxASmuktDIL7V6LVln2D-v48P3LNZC/view">Rec</a></td></tr>
+          <tr><td class="mono">23</td><td class="mono">2026-07-16</td><td class="mono">10:37 PDT</td><td>Proposal Debrief (internal)</td><td class="mono">48:57</td><td>John, David, Kelly</td><td><a href="https://docs.google.com/document/d/1w5y9tBhSZVmHcIJC_Wr1f9sp8SksJ5F5hxVLTezXyRc/edit">Notes</a></td></tr>
+        </tbody>
+        <tfoot><tr><td class="mono"></td><td colspan="3">21 timed sessions</td><td class="mono">20:44:00</td><td colspan="2">≈ 20 hours 44 minutes of recorded discovery</td></tr></tfoot>
+      </table>
     </div>
-    <div class="legend">
-      <span class="flag">*&nbsp;</span><span>&nbsp;No transcript (recording only).</span>
-      <span class="flag">†&nbsp;</span><span>&nbsp;Title says Trevor, but the recording is an internal ops session — no Huffmaster content.</span>
-      <span class="flag">‡&nbsp;</span><span>&nbsp;Mostly a different client (Construgypsum); kept for shared platform decisions.</span>
-    </div>
+    <div class="fnote"><span class="flag">*</span> No transcript (recording only). &nbsp; <span class="flag">†</span> Title says Trevor, but the recording is an internal ops session — no Huffmaster content. &nbsp; <span class="flag">‡</span> Mostly a different client (Construgypsum); kept for shared platform decisions.</div>
   </section>
 
-  <!-- STATUS / KANBAN -->
-  <section>
-    <h2><span class="num">05</span> Project status &amp; in-flight work</h2>
+  <!-- ===== STATUS ===== -->
+  <section class="blk" id="status">
+    <h2><span class="num">06</span> Project status &amp; in-flight work</h2>
     <p class="lead">Status as of July 16, 2026. Click any card for its dated timeline. Commercial terms are handled separately in the MSA and are not shown here.</p>
     <div class="kanban">
-
       <div class="col done">
         <div class="colhead"><span><span class="dot"></span>Done</span><span class="cnt">3</span></div>
-        <details class="kc"><summary><span>Digital asset: RACI dashboard &amp; dependency analysis <span class="chev">▸</span></span><span class="own">David</span></summary>
-          <div class="body">Searchable RACI dashboard + dependency HTML, live on GitHub Pages and in active use as client-facing artifacts.
-            <ul><li>07/13 — RACI reviewed vs system breakdown; gaps found</li><li>07/14 — 790-task workflow converted to searchable HTML; pushed to repo</li><li>07/15 — dependency categorization (parallel/independent/dependent) published</li></ul></div></details>
-        <details class="kc"><summary><span>Systems architecture diagram confirmed <span class="chev">▸</span></span><span class="own">David / Anna</span></summary>
-          <div class="body">Post-migration system map built and confirmed swap-by-swap with Anna; POC scope highlighted.
-            <ul><li>07/10 — Trevor walked the Visio/flow at discovery</li><li>07/15 — Anna confirmed each system swap; diagram sent to team</li></ul></div></details>
-        <details class="kc"><summary><span>Discovery &amp; core artifact gathering <span class="chev">▸</span></span><span class="own">Team</span></summary>
-          <div class="body">Kickoff discovery complete; RACI, OneNote process docs, and Visio received and analyzed.
-            <ul><li>06/05 — POC agreed with Trevor</li><li>07/10 — discovery session; Sword architecture confirmed</li></ul></div></details>
+        <details class="kc"><summary><span>Digital asset: RACI dashboard &amp; dependency analysis <span class="chev">▸</span></span><span class="own">David</span></summary><div class="body">Searchable RACI dashboard + dependency HTML live on GitHub Pages, in active use as client-facing artifacts.<ul><li>07/13 — RACI reviewed vs system breakdown</li><li>07/14 — 790-task workflow → searchable HTML; pushed to repo</li><li>07/15 — dependency categorization published</li></ul></div></details>
+        <details class="kc"><summary><span>Systems architecture diagram confirmed <span class="chev">▸</span></span><span class="own">David / Anna</span></summary><div class="body">Post-migration map built and confirmed swap-by-swap with Anna; POC scope highlighted.<ul><li>07/10 — Trevor walked the Visio/flow</li><li>07/15 — Anna confirmed each swap; diagram sent</li></ul></div></details>
+        <details class="kc"><summary><span>Discovery &amp; core artifact gathering <span class="chev">▸</span></span><span class="own">Team</span></summary><div class="body">Kickoff discovery complete; RACI, OneNote process docs, and Visio received and analyzed.<ul><li>06/05 — POC agreed with Trevor</li><li>07/10 — discovery; Sword architecture confirmed</li></ul></div></details>
       </div>
-
       <div class="col prog">
         <div class="colhead"><span><span class="dot"></span>In progress</span><span class="cnt">3</span></div>
-        <details class="kc"><summary><span>Proposal package (finalized; send pending) <span class="chev">▸</span></span><span class="own">John / David</span></summary>
-          <div class="body">Four-month POC package finalized 07/16; distribution to Amy + Anna (cc Trevor) is David's open action.
-            <ul><li>07/14 — skeleton proposal, "AI orchestration" positioning</li><li>07/15 — reviewed/finalized; rate card added; deck built</li><li>07/16 — comms plan set; version-control naming adopted</li></ul></div></details>
-        <details class="kc"><summary><span>POC scope: contract → CRM thread first <span class="chev">▸</span></span><span class="own">John / Kelly</span></summary>
-          <div class="body">Scope narrowed to the contract→CRM business thread first, then expand. Aug 1 target start.
-            <ul><li>07/10 — payroll/tax deferred as too big</li><li>07/15 — 4-month, T&amp;M target rates, flexible to fixed-price</li><li>07/16 — contract→CRM spine first; Aug 1 start</li></ul></div></details>
-        <details class="kc"><summary><span>Leads / entertainment &amp; production <span class="chev">▸</span></span><span class="own">Kelly</span></summary>
-          <div class="body">Early, informal pipeline alongside the core engagement.
-            <ul><li>07/10 — agricultural staffing + entertainment flagged as future markets</li><li>07/14 — production-company pilot conversation (Jason Stacy)</li><li>07/16 — golf-tournament invitation being socialized</li></ul></div></details>
+        <details class="kc"><summary><span>Proposal package (finalized; send pending) <span class="chev">▸</span></span><span class="own">John / David</span></summary><div class="body">Four-month POC package finalized 07/16; distribution to Amy + Anna (cc Trevor) is the open send.<ul><li>07/14 — skeleton, "AI orchestration" positioning</li><li>07/15 — reviewed/finalized; rate card added</li><li>07/16 — comms plan set; version-control naming</li></ul></div></details>
+        <details class="kc"><summary><span>POC scope: contract → CRM thread first <span class="chev">▸</span></span><span class="own">John / Kelly</span></summary><div class="body">Scope narrowed to the contract→CRM thread first, then expand. Aug 1 target start.<ul><li>07/10 — payroll/tax deferred</li><li>07/16 — contract→CRM spine first; Aug 1</li></ul></div></details>
+        <details class="kc"><summary><span>Leads / entertainment &amp; production <span class="chev">▸</span></span><span class="own">Kelly</span></summary><div class="body">Early, informal pipeline alongside the core engagement.<ul><li>07/10 — agri-staffing + entertainment flagged</li><li>07/14 — production-company pilot conversation</li><li>07/16 — golf-tournament invite socialized</li></ul></div></details>
       </div>
-
       <div class="col block">
         <div class="colhead"><span><span class="dot"></span>Blocked</span><span class="cnt">2</span></div>
-        <details class="kc"><summary><span>RACI dependency finalization <span class="chev">▸</span></span><span class="own">Anna + Amy</span></summary>
-          <div class="body">Waiting on the client: Anna to update the RACI (roles + dependencies), then finalize with Amy in Monday's working session (~07/20).
-            <ul><li>07/16 — Anna to update RACI before Monday</li><li>~07/20 — Ana + Amy dependency session; then Amy working session scheduled</li></ul></div></details>
-        <details class="kc"><summary><span>IT / payroll-system access <span class="chev">▸</span></span><span class="own">Kelly / Trevor</span></summary>
-          <div class="body">POC start depends on lining up IT access on Huffmaster's side; called out as the one thing that helps hold the Aug 1 target.
-            <ul><li>06/24 — Kelly to request payroll-system access</li><li>07/16 — IT access flagged as the gating item for Aug 1</li></ul></div></details>
+        <details class="kc"><summary><span>RACI dependency finalization <span class="chev">▸</span></span><span class="own">Anna + Amy</span></summary><div class="body">Waiting on client: Anna to update the RACI (roles + dependencies), then finalize with Amy Monday (~07/20).<ul><li>07/16 — Anna to update before Monday</li><li>~07/20 — Ana + Amy dependency session</li></ul></div></details>
+        <details class="kc"><summary><span>IT / payroll-system access <span class="chev">▸</span></span><span class="own">Kelly / Trevor</span></summary><div class="body">POC start depends on lining up IT access on Huffmaster's side; the gating item for Aug 1.<ul><li>06/24 — Kelly to request access</li><li>07/16 — flagged as gating for Aug 1</li></ul></div></details>
       </div>
-
       <div class="col pend">
         <div class="colhead"><span><span class="dot"></span>Pending</span><span class="cnt">3</span></div>
-        <details class="kc"><summary><span>Proposal review with Trevor <span class="chev">▸</span></span><span class="own">Kelly</span></summary>
-          <div class="body">Kelly to reach Trevor and schedule a walkthrough early the following week; Trevor could not join the 07/16 client call.</div></details>
-        <details class="kc"><summary><span>Payroll reconciliation / LPL demo <span class="chev">▸</span></span><span class="own">John / Kelly</span></summary>
-          <div class="body">Reconciliation demo built but parked; kept as a fast-follow after the gate 1–4 POC. Kelly's Q1-filings vs UKG validation is an open task.</div></details>
-        <details class="kc"><summary><span>JV entity: LLC + EIN + MSA <span class="chev">▸</span></span><span class="own">John</span></summary>
-          <div class="body">50/50 Cascade Clarity + Lean Payroll Labs JV; LLC/EIN/bank-account setup underway; commercial terms to land in the shared MSA.</div></details>
+        <details class="kc"><summary><span>Proposal review with Trevor <span class="chev">▸</span></span><span class="own">Kelly</span></summary><div class="body">Kelly to reach Trevor and schedule a walkthrough early the following week; Trevor could not join the 07/16 client call.</div></details>
+        <details class="kc"><summary><span>Payroll reconciliation / LPL demo <span class="chev">▸</span></span><span class="own">John / Kelly</span></summary><div class="body">Reconciliation demo built but parked; kept as a fast-follow after the gate 1–4 POC. Kelly's Q1-filings vs UKG validation open.</div></details>
+        <details class="kc"><summary><span>JV entity: LLC + EIN + MSA <span class="chev">▸</span></span><span class="own">John</span></summary><div class="body">50/50 Cascade Clarity + Lean Payroll Labs JV; LLC/EIN/bank setup underway; commercial terms land in the MSA.</div></details>
       </div>
-
     </div>
   </section>
 
-  <!-- HOW ORGANIZED -->
-  <section>
-    <h2><span class="num">06</span> How this is organized</h2>
+  <!-- ===== HOW ORGANIZED ===== -->
+  <section class="blk" id="organized">
+    <h2><span class="num">07</span> How this is organized</h2>
     <div class="two">
-      <div class="note"><b style="color:var(--txt)">Where things live.</b><br>
-        Navigable HTML analyses are published on GitHub Pages (public). Internal working files — proposals, the summary document, discovery notes, and meeting notes — live in the Drive folder <a href="https://drive.google.com/drive/folders/1ouXltA4X8hqvEiptAyH0JnqnO4OyxqCM">Huffmaster – Project Resources</a> and are linked by URL. Nothing sensitive is committed to the public repo.</div>
-      <div class="note"><b style="color:var(--txt)">Local folder structure.</b><br>
-        In the Cascade Clarity workspace: <span style="color:#cdd9e6">Huffmaster/</span> → <span style="color:#cdd9e6">documents/</span>, <span style="color:#cdd9e6">proposals/</span>, <span style="color:#cdd9e6">reports/</span>, <span style="color:#cdd9e6">meetings/</span>, <span style="color:#cdd9e6">demo-app/</span>, plus <span style="color:#cdd9e6">index.html</span> and the <span style="color:#cdd9e6">Huffmaster_Resource_Summary</span> (Word + PDF). Sources were copied in, not moved.</div>
+      <div class="note"><b style="color:var(--ink)">Where things live.</b><br>Navigable HTML analyses are published on GitHub Pages (public). Internal working files — proposals, the summary document, discovery notes, and meeting notes — live in the Drive folder <a href="https://drive.google.com/drive/folders/1ouXltA4X8hqvEiptAyH0JnqnO4OyxqCM">Huffmaster – Project Resources</a> and are linked by URL. Nothing sensitive is committed to the public repo.</div>
+      <div class="note"><b style="color:var(--ink)">Local folder.</b><br>In the Cascade Clarity workspace: <span style="font-family:'JetBrains Mono',Menlo,monospace;font-size:12px">Huffmaster/</span> → <span style="font-family:'JetBrains Mono',Menlo,monospace;font-size:12px">documents/, proposals/, reports/, meetings/, demo-app/, previews/</span>, plus <span style="font-family:'JetBrains Mono',Menlo,monospace;font-size:12px">index.html</span> and the <span style="font-family:'JetBrains Mono',Menlo,monospace;font-size:12px">Huffmaster_Resource_Summary</span> (Word + PDF). Sources were copied in, not moved.</div>
     </div>
   </section>
 
   <footer>
     <span>Project Sword · Huffmaster × Cascade Clarity / Lean Payroll Labs</span>
-    <span>Compiled Jul 16, 2026 · Hub published on GitHub Pages · Internal files in Google Drive</span>
+    <span>Compiled Jul 16, 2026 · Hub on GitHub Pages · Internal files in Google Drive</span>
   </footer>
-
 </div>
+
+<script>
+(function(){
+  // theme
+  var root=document.documentElement, tbtn=document.getElementById('theme');
+  var saved=null; try{saved=localStorage.getItem('sword-theme');}catch(e){}
+  if(saved) root.setAttribute('data-theme',saved);
+  function setIcon(){var d=root.getAttribute('data-theme')==='dark';
+    tbtn.innerHTML = d
+      ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>'
+      : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>';}
+  setIcon();
+  tbtn.addEventListener('click',function(){var d=root.getAttribute('data-theme')==='dark';root.setAttribute('data-theme',d?'light':'dark');try{localStorage.setItem('sword-theme',d?'light':'dark');}catch(e){}setIcon();});
+
+  // search filter
+  var q=document.getElementById('q');
+  q.addEventListener('input',function(){
+    var v=q.value.trim().toLowerCase();
+    document.querySelectorAll('[data-filter]').forEach(function(grid){
+      var shown=0;
+      grid.querySelectorAll('.card').forEach(function(c){
+        var hay=((c.getAttribute('data-kw')||'')+' '+c.textContent).toLowerCase();
+        var ok=!v||hay.indexOf(v)>-1; c.classList.toggle('hidden',!ok); if(ok)shown++;
+      });
+      var sec=grid.closest('.blk'); if(sec&&sec.id!=='meetings'){ sec.style.display=(v&&shown===0)?'none':''; }
+    });
+    // meetings rows
+    document.querySelectorAll('#mtable tbody tr').forEach(function(r){
+      var ok=!v||r.textContent.toLowerCase().indexOf(v)>-1; r.style.display=ok?'':'none';
+    });
+  });
+
+  // active tab on scroll
+  var links=[].slice.call(document.querySelectorAll('nav.tabs a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onScroll(){
+    var y=window.scrollY+90,cur=0;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('active',i===cur);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  links.forEach(function(a){a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();window.scrollTo({top:t.offsetTop-64,behavior:'smooth'});}
+  });});
+})();
+</script>
 </body>
 </html>
